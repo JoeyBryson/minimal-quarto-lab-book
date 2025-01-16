@@ -10,6 +10,13 @@
     ]
   },
   {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "Minimal Quarto Lab Book",
+    "section": "",
+    "text": "#test"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "Lab book in Quarto",
