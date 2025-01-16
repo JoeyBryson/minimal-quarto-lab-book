@@ -21,7 +21,7 @@ For more information on Quarto, see [https://quarto.org](https://quarto.org)
 
 ## To create your website on github
 
-- Go to your repository jjjs on github (e.g. [https://github.com/FTurci/minimal-quarto-lab-book]())
+- Go to your repository jjjshhh on github (e.g. [https://github.com/FTurci/minimal-quarto-lab-book]())
 - Click on `Settings`
 - Click on `Pages` on the left sidebar
 - Under the section **Branch** select branch `main` and select folder `docs`
