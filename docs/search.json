@@ -14,7 +14,10 @@
     "href": "intro.html",
     "title": "Minimal Quarto Lab Book",
     "section": "",
-    "text": "#test"
+    "text": "#test",
+    "crumbs": [
+      "intro.html"
+    ]
   },
   {
     "objectID": "index.html",
