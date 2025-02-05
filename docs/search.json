@@ -12,9 +12,9 @@
   {
     "objectID": "intro.html",
     "href": "intro.html",
-    "title": "Minimal Quarto Lab Book",
+    "title": "First Session",
     "section": "",
-    "text": "#test",
+    "text": "16/ 01/ 2025\nThe first session was spent understanding the basic ideas behind the Ising Model and creating a workflow enviroment using Git. A repository was made for colaborative developement of experimental code, and forks were made from a template for indidual Quarto lab books.",
     "crumbs": [
       "intro.html"
     ]
