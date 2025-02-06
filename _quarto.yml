@@ -15,6 +15,7 @@ website:
       - index.qmd
       - notebook.ipynb
       - intro.ipynb
+      - second_session.ipynb
 
 
 
