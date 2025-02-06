@@ -12,10 +12,7 @@ website:
     search: true
     collapse-level: 1
     contents:
-      - index.qmd
-      - notebook.ipynb
-      - intro.ipynb
-      - second_session.ipynb
+      - timeline.ipynb
 
 
 
