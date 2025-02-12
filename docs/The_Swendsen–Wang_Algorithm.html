@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Minimal Quarto Lab Book</title>
+<title>The Swendsen–Wang Algorithm – Minimal Quarto Lab Book</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,40 +19,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -101,6 +67,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -113,7 +108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Lab book in Quarto</li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">The Swendsen–Wang Algorithm</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -151,9 +146,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#what-you-need" id="toc-what-you-need" class="nav-link active" data-scroll-target="#what-you-need"><span class="header-section-number">1</span> What you need</a></li>
-  <li><a href="#to-create-your-website-on-github" id="toc-to-create-your-website-on-github" class="nav-link" data-scroll-target="#to-create-your-website-on-github"><span class="header-section-number">2</span> To create your website on github</a></li>
-  <li><a href="#example-of-minimal-code" id="toc-example-of-minimal-code" class="nav-link" data-scroll-target="#example-of-minimal-code"><span class="header-section-number">3</span> Example of minimal code</a></li>
+  <li><a href="#the-problem-of-critical-slowing-down" id="toc-the-problem-of-critical-slowing-down" class="nav-link active" data-scroll-target="#the-problem-of-critical-slowing-down"><span class="header-section-number">0.1</span> The Problem of Critical Slowing Down</a></li>
   </ul>
 </nav>
     </div>
@@ -162,7 +155,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Lab book in Quarto</h1>
+<h1 class="title">The Swendsen–Wang Algorithm</h1>
 </div>
 
 
@@ -179,46 +172,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Quarto is a an editing platform centered on Markdown.</p>
-<p>You can write down multiple kinds of interactive documents in Quarto, including websites that mix code, text, equations etc. The individual notebook can be jupyter notebooks or dedicated markdown documents.</p>
-<p>Combined with combined repositories such as GitHub, Quarto allows you to create a static website to collect your progress is very easily.</p>
-<p>For more information on Quarto, see <a href="https://quarto.org">https://quarto.org</a></p>
-<section id="what-you-need" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="what-you-need"><span class="header-section-number">1</span> What you need</h2>
-<ul>
-<li>A <code>quarto</code> installation, e.g.&nbsp;from <a href="https://quarto.org">https://quarto.org</a></li>
-<li>A suitable editor (e.g.&nbsp;VSCode)</li>
-<li>An account on Github (or similar services)</li>
-<li>Some knowledge of <code>git</code>?</li>
-</ul>
-</section>
-<section id="to-create-your-website-on-github" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="to-create-your-website-on-github"><span class="header-section-number">2</span> To create your website on github</h2>
-<ul>
-<li>Go to your repository jjjshhh12 on github (e.g.&nbsp;<a href="">https://github.com/FTurci/minimal-quarto-lab-book</a>)</li>
-<li>Click on <code>Settings</code></li>
-<li>Click on <code>Pages</code> on the left sidebar</li>
-<li>Under the section <strong>Branch</strong> select branch <code>main</code> and select folder <code>docs</code></li>
-<li>Render your project with <code>quarto render</code></li>
-<li>Commit and push your changes and you are done. The website will be available under you domain (e.g., <a href="">https://fturci.github.io/minimal-quarto-lab-book/welcome.html</a> )</li>
-</ul>
-</section>
-<section id="example-of-minimal-code" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="example-of-minimal-code"><span class="header-section-number">3</span> Example of minimal code</h2>
-<div id="d4e00440" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> np.linspace(<span class="dv">0</span>,<span class="dv">10</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>plt.plot(t,t)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
+<p>https://www.inference.org.uk/itila/swendsen.pdf</p>
+<p>Up to this point in the lab, the algorithm used to evolve the system into an equilibrium state, and then cycle through enough states to collect a representative sample of the distributions of Energy and Magnetization, was the Metropolis-Hastings Algorithm. This algorithm chose a single cell at random and flipped it with a probability according it’s own spin state and the spin state of it’s nearest neighbours. This is possible because the Hamiltonian defining the Ising Model:</p>
+<p><span class="math inline">\(H = -J \sum_{\langle i j \rangle} S_i S_j.\)</span></p>
+<p>depends only on the interactions between the cells i and j which are defined by the notation <span class="math inline">\(\langle i j \rangle\)</span> to be adjacent. Therefore, the metropolis algothithm can accurately reproduce this hamiltonian by only considering the local energy change of flipping a single cell.</p>
+<section id="the-problem-of-critical-slowing-down" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="the-problem-of-critical-slowing-down"><span class="header-section-number">0.1</span> The Problem of Critical Slowing Down</h3>
+<div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="index_files/figure-html/cell-2-output-1.png" width="566" height="411" class="figure-img"></p>
+<p><img src="The_Swendsen–Wang_Algorithm_files/figure-html/cell-2-1-image-2.png" class="img-fluid figure-img"></p>
+<figcaption>image-2.png</figcaption>
 </figure>
 </div>
-</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="The_Swendsen–Wang_Algorithm_files/figure-html/cell-3-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
 </div>
 
 
