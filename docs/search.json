@@ -11,7 +11,10 @@
     "href": "The_Swendsen–Wang_Algorithm.html",
     "title": "The Swendsen–Wang Algorithm",
     "section": "",
-    "text": "https://www.inference.org.uk/itila/swendsen.pdf\nUp to this point in the lab, the algorithm used to evolve the system into an equilibrium state, and then cycle through enough states to collect a representative sample of the distributions of Energy and Magnetization, was the Metropolis-Hastings Algorithm. This algorithm chose a single cell at random and flipped it with a probability according it’s own spin state and the spin state of it’s nearest neighbours. This is possible because the Hamiltonian defining the Ising Model:\n\\(H = -J \\sum_{\\langle i j \\rangle} S_i S_j.\\)\ndepends only on the interactions between the cells i and j which are defined by the notation \\(\\langle i j \\rangle\\) to be adjacent. Therefore, the metropolis algothithm can accurately reproduce this hamiltonian by only considering the local energy change of flipping a single cell.\n\n0.1 The Problem of Critical Slowing Down\n\n\n\nimage-2.png\n\n\n\n\n\nimage.png"
+    "text": "https://www.inference.org.uk/itila/swendsen.pdf\nUp to this point in the lab, the algorithm used to evolve the system into an equilibrium state, and then cycle through enough states to collect a representative sample of the distributions of Energy and Magnetization, was the Metropolis-Hastings Algorithm. This algorithm chose a single cell at random and flipped it with a probability according it’s own spin state and the spin state of it’s nearest neighbours. This is possible because the Hamiltonian defining the Ising Model:\n\\(H = -J \\sum_{\\langle i j \\rangle} S_i S_j.\\)\ndepends only on the interactions between the cells i and j which are defined by the notation \\(\\langle i j \\rangle\\) to be adjacent. Therefore, the metropolis algothithm can accurately reproduce this hamiltonian by only considering the local energy change of flipping a single cell.\n\n0.1 The Problem of Critical Slowing Down\n\n\n\nimage-2.png\n\n\n\n\n\nimage.png",
+    "crumbs": [
+      "The Swendsen–Wang Algorithm"
+    ]
   },
   {
     "objectID": "intro.html",
