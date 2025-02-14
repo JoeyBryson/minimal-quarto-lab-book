@@ -12,7 +12,8 @@ website:
     search: true
     collapse-level: 1
     contents:
-      - timelines.ipynb
+      - timeline.ipynb
+      - The_Swendsen-Wang_Algorithm.ipynb
 
 
 
