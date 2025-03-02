@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The Swendsen–Wang Algorithm – Minimal Quarto Lab Book</title>
+<title>Defining The Ising Model – Minimal Quarto Lab Book</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -108,7 +108,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./The_Swendsen–Wang_Algorithm.html">The Swendsen–Wang Algorithm</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Defining The Ising Model</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -141,7 +141,7 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./The_Swendsen–Wang_Algorithm.html" class="sidebar-item-text sidebar-link active">
+  <a href="./The_Swendsen–Wang_Algorithm.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">The Swendsen–Wang Algorithm</span></a>
   </div>
 </li>
@@ -155,7 +155,7 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-problem-of-critical-slowing-down" id="toc-the-problem-of-critical-slowing-down" class="nav-link active" data-scroll-target="#the-problem-of-critical-slowing-down"><span class="header-section-number">0.1</span> The Problem of Critical Slowing Down</a></li>
+  <li><a href="#computational-algorithms" id="toc-computational-algorithms" class="nav-link active" data-scroll-target="#computational-algorithms"><span class="header-section-number">0.1</span> Computational Algorithms</a></li>
   </ul>
 </nav>
     </div>
@@ -164,7 +164,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">The Swendsen–Wang Algorithm</h1>
+<h1 class="title">Defining The Ising Model</h1>
 </div>
 
 
@@ -181,35 +181,120 @@ window.Quarto = {
 </header>
 
 
-<p>https://www.inference.org.uk/itila/swendsen.pdf</p>
-<p>Up to this point in the lab, the algorithm used to evolve the system into an equilibrium state, and then cycle through enough states to collect a representative sample of the distributions of Energy and Magnetization, was the Metropolis-Hastings Algorithm. This algorithm chose a single cell at random and flipped it with a probability according it’s own spin state and the spin state of it’s nearest neighbours. This is possible because the Hamiltonian defining the Ising Model:</p>
-<p><span class="math inline">\(H = -J \sum_{\langle i j \rangle} S_i S_j.\)</span></p>
-<p>depends only on the interactions between the cells i and j which are defined by the notation <span class="math inline">\(\langle i j \rangle\)</span> to be adjacent. Therefore, the metropolis algothithm can accurately reproduce this hamiltonian by only considering the local energy change of flipping a single cell.</p>
-<section id="the-problem-of-critical-slowing-down" class="level3" data-number="0.1">
-<h3 data-number="0.1" class="anchored" data-anchor-id="the-problem-of-critical-slowing-down"><span class="header-section-number">0.1</span> The Problem of Critical Slowing Down</h3>
-<p>The Metropolis-Hastings algorithm can theoretically produce representative statistics for the Ising model, given a sufficiently long amount of simulation time. However, as the temperature approaches the critical temperature, the amount of time required for the system to reach an equlibrium state increases assymtotically. This effect is known as Critical Slowing Down, and given the practical limits of computation, can severely reduce the accuracy (relative to the theoretical limit) of data generated. Simulations were run over for a simulation time of 1000 equalization steps and 10000 measuremement steps. Bellow, are graphs of the average energy, magnetization, the variance of their distibutions specific heat and susceptibility against temperature for the measurement period of the simulation. It can be observed that around the Critical Temprerature <span class="math inline">\(T_c = 2.269\)</span> the graphs become irregular and stochastic, indicating the simulations were not run for a sufficient amount of time to cycle through enough states to reprasatitatively achieve the theoretical distributions. https://www.inference.org.uk/itila/swendsen.pdf<br>
-https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.58.86</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="The_Swendsen–Wang_Algorithm_files/figure-html/cell-2-1-image-2.png" class="img-fluid figure-img"></p>
-<figcaption>image-2.png</figcaption>
-</figure>
-</div>
-<p>This can be explained through the parameter of Relaxation Time. We define relation time arbitrarily by the number of simulation steps <span class="math inline">\(\tau\)</span> for the autocorrelation function <span class="math inline">\(C(\tau)\)</span> of the Magetization <span class="math inline">\(M(t)\)</span> defined by <span class="math inline">\(C(\tau) = \langle M(t) M(t+\tau) \rangle - \langle M(t) \rangle^2\)</span> to drop below 0.1. This corresponds to the number of</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="relaxation_time.png" class="img-fluid figure-img"></p>
-<figcaption>attachment:relaxation_time.png</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="The_Swendsen–Wang_Algorithm_files/figure-html/cell-5-1-image.png" class="img-fluid figure-img"></p>
-<figcaption>image.png</figcaption>
-</figure>
-</div>
+<p>We start with 2d lattice where each lattice site <span class="math inline">\(i\)</span> has a corresponing ‘spin’ $ _i {-1, +1} $. The microstate of lattice spins is notated by <span class="math inline">\(\boldsymbol{\sigma}\)</span>. A Hamiltonian of a state <span class="math inline">\(\boldsymbol{\sigma}\)</span> in the Ising Model (in the absence of an external field) is defined by <span class="math display">\[H(\boldsymbol{\sigma}) = -\sum_{\langle i j \rangle} J_{ij} \sigma_i \sigma_j \tag{1}
+\]</span> Where <span class="math inline">\(\langle i j \rangle\)</span> indicates <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are adjacent lattice sites and <span class="math inline">\(J_{ij}\)</span> is the ‘coupling strength’ between given sites. In this experiment <span class="math inline">\(J_{ij}\)</span> is set equal to <span class="math inline">\(1\)</span> for all interactions and the Hamiltonian becomes simply <span class="math display">\[H(\boldsymbol{\sigma}) = -\sum_{\langle i j \rangle} \sigma_i \sigma_j \tag{2}
+\]</span> The probability of any given state in a thermodynamic system in equilibrium at temperature <span class="math inline">\(T\)</span> coresponding to Bolzman factor <span class="math inline">\(\beta = 1/(k_BT)\)</span> is given by <span class="math display">\[ p(\boldsymbol{\sigma}) = \frac{e^{-\beta H(\boldsymbol{\sigma})}}{Z} \tag{3}
+\]</span> where <span class="math inline">\(Z_{\beta}\)</span> is the partition function <span class="math display">\[ Z = \sum_{\boldsymbol{\sigma}} e^{-\beta H(\boldsymbol{\sigma})}  \tag{4}
+\]</span></p>
+<section id="computational-algorithms" class="level3" data-number="0.1">
+<h3 data-number="0.1" class="anchored" data-anchor-id="computational-algorithms"><span class="header-section-number">0.1</span> Computational Algorithms</h3>
+<p>Numerically simulating the Ising Model to produce representative statistics requires the above equations be satisfied aswell as that the simulation be in an equilibrium state. One method to ensure equilibrium is by ensuring condition of <strong>detailed balance</strong>. That is, that for any two microstates <span class="math inline">\(\nu\)</span> and <span class="math inline">\(\mu\)</span>. <span class="math display">\[p(\mu) P(\mu \to \nu) =p(\nu) P(\nu \to \mu) \tag{5}
+\]</span> #### The Metropolis Hastings Algorythm The Metropolis Hastings Algorythm is one such algorythm that satisfies detailed balance by only changing one spin state <span class="math inline">\(\sigma_i\)</span> at a time (so for any <span class="math inline">\(\nu\)</span> and <span class="math inline">\(\mu\)</span> with more than one spin states difference <span class="math inline">\(P(\mu \to \nu) = P(\nu \to \mu) = 0\)</span> for a given simulation step). To Satisfy <span class="math inline">\((5)\)</span>, <span class="math inline">\(P(\mu \to \nu)\)</span> and <span class="math inline">\(P(\nu \to \mu)\)</span> must be chosen such that<br>
+<span class="math display">\[
+\frac{P(\mu \to \nu)}{P(\nu \to \mu)} = \frac{p(\nu)}{p(\mu)} = \frac{\frac{e^{-\beta H(\nu)}}{Z}}{\frac{e^{-\beta H(\mu)}}{Z}} = e^{-\beta(H(\nu)-H(\mu))} \tag{6}
+\]</span> This can be done by the following method: Let <span class="math inline">\(\nu\)</span> be the current state Choose a random lattice site and let <span class="math inline">\(\mu\)</span> be the proposed state of flipping the spin on the chosen lattice site, the probability to be computed is <span class="math inline">\(P(\nu \to \mu)\)</span> 1) Choose a random lattice site 2) Calculate <span class="math inline">\(\Delta H = H(\nu)-H(\mu)\)</span> 3) - If <span class="math inline">\(\Delta H &gt; 0\)</span>, set <span class="math inline">\(P(\mu \to \nu) = 1\)</span>, then to satisfy <span class="math inline">\((6)\)</span>, let <span class="math inline">\(P(\nu \to \mu) = e^{-\beta(\Delta H)}\)</span> - Else if <span class="math inline">\(\Delta H &lt; 0\)</span>, by symetry of the above line, let <span class="math inline">\(P(\nu \to \mu) = 1\)</span></p>
+<p>These steps can be repeated and will produce true Ising Model statistics as the number of steps goes to infinity. This is one of the simplest ways to simulate the Ising Model</p>
+<section id="the-swendsen-wang-algorythm" class="level4" data-number="0.1.1">
+<h4 data-number="0.1.1" class="anchored" data-anchor-id="the-swendsen-wang-algorythm"><span class="header-section-number">0.1.1</span> The Swendsen-Wang Algorythm</h4>
+<p>The Metropolis-Hastings algorythm produces true statistics as the number of steps goes to infinity, and produces sufficiently accurate statistics in a finite number of steps for temperatures above and bellow the critical temperature. However around the critical temperature the number of steps required to produce representative distributions goes to infitity, this phenomenon is known as <strong>Critical Slowing Down</strong>, see URL for a more in depth investigation. In order to study the system at criticality, for example, to find the <strong>Critical Exponents</strong>. An algorythm must be used that is computationally stable at and around the critical temperature. One algorythm which satisfies this requirement is the Swendsen-Wang Algorythm. Bellow we will show it also satisfies detailed balance for the Ising Model.</p>
+<p>As before, start with a state given by <span class="math inline">\(\mu\)</span>. The Swendsen-Wang Algorythm works by finding many possible <span class="math inline">\(\nu\)</span> and tranforming to any found state <span class="math inline">\(\nu\)</span> with uniform probability. This works by introducing a new element, for each pair of adjacent lattice sites <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> assign a ‘bond’ variable <span class="math inline">\(d_{i,j} \in \{0, 1\}\)</span> these are assigned according to a probability distribution conditional on the spin states <span class="math inline">\(\mu_i\)</span> and <span class="math inline">\(\mu_j\)</span> contained in <span class="math inline">\(\mu\)</span>. New states <span class="math inline">\(\nu\)</span> are then derived directly from the bond configuration <span class="math inline">\(d\)</span>.</p>
+<p>This can be thought of as splitting the probability <span class="math inline">\(P(\nu \to \mu)\)</span> into conditional probabilities <span class="math inline">\(P(\nu \to \mu) = \sum_{d \in D}{P(\mu \mid d)P(d \mid \nu)}\)</span> where <span class="math inline">\(D\)</span> is the set of all possible bond states. The procedure is as follows:</p>
+<ol type="1">
+<li><p>Bond Formation Step: for each bond variable <span class="math inline">\(d_{i,j}\)</span>, set to 1 with the following probabilities <span class="math display">\[
+P(d_{i,j} = 1) =
+\begin{cases}
+1 - e^{-2\beta}, &amp; \text{if }  \mu_i = \mu_j \\
+0, &amp; \text{if } \mu_i \neq \mu_j
+\end{cases}
+\]</span></p>
+<p><span class="math display">\[
+P(d_{i,j} = 1 \mid \mu_i = \mu_j) = 1 - e^{-2\beta J}\\
+P(d_{i,j} = 0 \mid \mu_i = \mu_j) = e^{-2\beta J}\\
+P(d_{i,j} = 1 \mid \mu_i \neq \mu_j) = 0\\
+P(d_{i,j} = 0 \mid \mu_i \neq \mu_j) = 1
+\]</span></p></li>
+<li><p>Clustering Step: Any two lattice sites <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> which are connected by a bond d_{i,j} = 1, must have the same spin in <span class="math inline">\(\mu\)</span>. Even if lattice sites are not adjacent, if there are bonds which connect them via intermediate lattice sites, the previous condition nececitates that they must have the same spin. In this way, clusters can be formed. A clustering algorythm can be used to complete this step, given a bond configuration <span class="math inline">\(d\)</span></p></li>
+<li><p>Cluster flipping step: Given the space of possible <span class="math inline">\(\mu\)</span>’s with each cluster being of one spin, a final <span class="math inline">\(\mu\)</span> can be picked uniformly by simply assigning each cluster either spin 1 or -1 with a probability of 1/2</p></li>
+</ol>
+<p>As for the Metropolis Hastings Algorithm we want to show <span class="math display">\[
+\frac{P(\mu \to \nu)}{P(\nu \to \mu)} = \frac{\sum_{d \in D}{P(\nu \mid d)P(d \mid \mu)}}{\sum_{d \in D}{P(\mu \mid d)P(d \mid \nu)}} = e^{-\beta(H(\nu)-H(\mu))}
+\]</span></p>
+<p>Any bond state <span class="math inline">\(d\)</span> that can be accessed from a spin state in step 1, can also produce that same spin state in step 3. In other words the process is reversable. This implies that the bond states where both <span class="math inline">\(P(\nu \mid d)\)</span> and <span class="math inline">\(P(d \mid \mu)\)</span> are non-zero are the same as the bond states where both <span class="math inline">\(P(\mu \mid d)\)</span> and <span class="math inline">\(P(d \mid \nu)\)</span> are non-zero and we can denote this set of accessible bond states by <span class="math inline">\(D_{\nu,\mu}\)</span>. So the sum can be rewritten as</p>
+<p><span class="math display">\[
+\frac{{\sum_{d \in D_{\nu,\mu}}P(\nu \mid d)P(d \mid \mu)}}{{\sum_{d \in D_{\nu,\mu}}P(\mu \mid d)P(d \mid \nu)}}
+\]</span></p>
+<p>Now, let’s decompose the conditional probability of <span class="math inline">\(d\)</span> given a state <span class="math inline">\(\sigma\)</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+P(d \mid \sigma) = \prod_{\langle i j \rangle} &amp; \Big[  P(d_{i,j}=1 \mid \sigma_i = \sigma_j) d_{i,j} \delta_{\sigma_i, \sigma_j}  \\
+&amp; + P(d_{i,j}=0 \mid \sigma_i = \sigma_j)(1 - d_{i,j})  \delta_{\sigma_i, \sigma_j} \\
+&amp; +  P(d_{i,j}=1 \mid \sigma_i \neq \sigma_j) d_{i,j} (1 - \delta_{\sigma_i, \sigma_j}) \\
+&amp; + P(d_{i,j}=0 \mid \sigma_i \neq \sigma_j)(1 - d_{i,j}) (1 - \delta_{\sigma_i, \sigma_j}) \Big]
+\end{aligned}
+\]</span></p>
+<p><span class="math display">\[
+P(d \mid \sigma) = \prod_{\langle i j \rangle} \Bigg[
+(1 - e^{-2\beta J}) d_{i,j} \delta_{\sigma_i, \sigma_j}
++ e^{-2\beta J} (1 - d_{i,j}) \delta_{\sigma_i, \sigma_j}
++ (1 - d_{i,j}) (1 - \delta_{\sigma_i, \sigma_j})
+\Bigg]
+\]</span></p>
+<p>Consider the term <span class="math inline">\((1 - d_{i,j})(1 - \delta_{\sigma_i, \sigma_j})\)</span>. If <span class="math inline">\(\delta_{\sigma_i, \sigma_j} = 1\)</span>, ie the sites i and j have the same spin, the term becomes 0 invarient of <span class="math inline">\(d_{i,j}\)</span>. If <span class="math inline">\(\delta_{\sigma_i, \sigma_j} = 0\)</span>, and the sites have opposing spins, we have that the probability <span class="math inline">\(P(d_{i,j} = 0 \mid \sigma_i \neq \sigma_j) = 1\)</span> which enforces that <span class="math inline">\(d_{i,j} = 0\)</span>. Therfore, we can rewrite the term simply as <span class="math inline">\((1 - \delta_{\sigma_i, \sigma_j})\)</span>. We also factorise ou the <span class="math inline">\(\delta_{\sigma_i, \sigma_j}\)</span> from the first two terms.</p>
+<p><span class="math display">\[
+P(d \mid \sigma) = \prod_{\langle i j \rangle} \Bigg[
+((1 - e^{-2\beta J}) d_{i,j}
++ e^{-2\beta J} (1 - d_{i,j})) \delta_{\sigma_i, \sigma_j}
++ (1 - \delta_{\sigma_i, \sigma_j})
+\Bigg]
+\]</span></p>
+<p>Applying the identity for a binary variable <span class="math inline">\(x \in \{0, 1\}\)</span></p>
+<p><span class="math display">\[
+ax + b(1-x) \equiv a^xb^{1-x}
+\]</span></p>
+<p>for the bracketed terms with respect to <span class="math inline">\(d_{i,j}\)</span> and then for the whole sum with respect to <span class="math inline">\(\delta_{\sigma_i, \sigma_j}\)</span></p>
+<p><span class="math display">\[
+P(d \mid \sigma) = \prod_{\langle i j \rangle} \Bigg[
+\left( (1 - e^{-2\beta J})^{d_{i,j}} e^{-2\beta J (1 - d_{i,j})} \right)^{\delta_{\sigma_i, \sigma_j}}1^{1-\delta_{\sigma_i, \sigma_j}}
+\Bigg] = \prod_{\langle i j \rangle} \Bigg[
+\left( (1 - e^{-2\beta J})^{d_{i,j}} e^{-2\beta J (1 - d_{i,j})} \right)^{\delta_{\sigma_i, \sigma_j}}
+\Bigg] \\= \prod_{\langle i j \rangle} \Bigg[
+\left( e^{-2\beta J} (e^{2\beta J} - 1)^{d_{i,j}} \right)^{\delta_{\sigma_i, \sigma_j}}
+\Bigg]
+=\prod_{\langle i j \rangle} e^{-2\beta J\delta_{\sigma_i, \sigma_j}} \Bigg[
+\left(  (e^{2\beta J} - 1)^{d_{i,j}} \right)^{\delta_{\sigma_i, \sigma_j}}
+\Bigg]
+\\= {e^{-\sum_{\langle i j \rangle}2\beta J\delta_{\sigma_i, \sigma_j}}}\prod_{\langle i j \rangle}  \Bigg[  (e^{2\beta J} - 1)^{{d_{i,j}}{\delta_{\sigma_i, \sigma_j}}}
+\Bigg]
+\]</span></p>
+<p>Lets look at</p>
+<p><span class="math display">\[
+P(\mu \to \nu) = {\sum_{d \in D_{\nu,\mu}}P(\nu \mid d)P(d \mid \mu)} \\=
+\sum_{d \in D_{\nu,\mu}}\Bigg[P(\nu \mid d){e^{-\sum_{\langle i j \rangle}2\beta J\delta_{\mu_i, \mu_j}}}\prod_{\langle i j \rangle}  \Bigg[ (e^{2\beta J} - 1)^{{d_{i,j}}{\delta_{\mu_i, \mu_j}}}
+\Bigg]\Bigg] \\=
+{e^{-\sum_{\langle i j \rangle}2\beta J\delta_{\mu_i, \mu_j}}}\sum_{d \in D_{\nu,\mu}}\Bigg[P(\nu \mid d)\prod_{\langle i j \rangle}  \Bigg[  (e^{2\beta J} - 1)^{{d_{i,j}}{\delta_{\mu_i, \mu_j}}}
+\Bigg]\Bigg]
+\]</span></p>
+<p>Similarly, $$ P() = {e^{-<em>{i j }2 J</em>{<em>i, <em>j}}}</em>{d D</em>{,}}]</p>
+<p>Since for <span class="math inline">\(d \in D_{\nu,\mu}\)</span>, <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> are both accessable states, for any <span class="math inline">\(d_{i,j} = 1\)</span>, this enforces that <span class="math inline">\(\delta_{\mu_i, \mu_j}\)</span> and <span class="math inline">\(\delta_{\nu_i, \nu_j}\)</span> must equal 1. It can be seen that <span class="math inline">\({d_{i,j}}{\delta_{\mu_i, \mu_j}} = {d_{i,j}}{\delta_{\nu_i, \nu_j}} = {d_{i,j}}\)</span></p>
+<p>Now, we can write</p>
+<p><span class="math display">\[
+\frac{P(\mu \to \nu)}{P(\nu \to \mu)} =
+e^{-\beta\sum_{\langle i j \rangle}2 J(\delta_{\mu_i, \mu_j}-\delta_{\nu_i, \nu_j})}\frac{\sum_{d \in D_{\nu,\mu}}\Bigg[P(\nu \mid d)\prod_{\langle i j \rangle}  \Bigg[  (e^{2\beta J} - 1)^{{d_{i,j}}}
+\Bigg]\Bigg]}{\sum_{d \in D_{\nu,\mu}}\Bigg[P(\nu \mid d)\prod_{\langle i j \rangle}  \Bigg[  (e^{2\beta J} - 1)^{d_{i,j}}
+\Bigg]\Bigg]}
+\]</span></p>
+<p>Since <span class="math inline">\(P(\nu \mid d) = P(\mu \mid d)\)</span> for any given state <span class="math inline">\(d\)</span>, and the sums are otherwise independent of <span class="math inline">\(\nu\)</span> and <span class="math inline">\(\mu\)</span>, the fraction simplifies to 1, and it can finally be seen that the relationship simplifies to</p>
+<p><span class="math display">\[
+\frac{P(\mu \to \nu)}{P(\nu \to \mu)} =
+e^{-\beta\sum_{\langle i j \rangle}2 J(\delta_{\mu_i, \mu_j}-\delta_{\nu_i, \nu_j})}=
+e^{-\beta\sum_{\langle i j \rangle} J(2\delta_{\mu_i, \mu_j}-1-2\delta_{\nu_i, \nu_j}+1)}=
+e^{-\beta(\sum_{\langle i j \rangle} J(2\delta_{\mu_i, \mu_j}-1)-(-\sum_{\langle i j \rangle} J(2\delta_{\nu_i, \nu_j}-1)))}\\=
+e^{-\beta(H(\nu)-H(\mu))}
+\]</span> $$</p>
+<p>As required. And so the Swendsen-Wang Algorythm satisfies detailed balance and will produce Ising Model Statistics.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
