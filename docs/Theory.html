@@ -280,7 +280,10 @@ P(\mu \to \nu) = {\sum_{d \in D_{\nu,\mu}}P(\nu \mid d)P(d \mid \mu)} \\=
 {e^{-\sum_{\langle i j \rangle}2\beta J\delta_{\mu_i, \mu_j}}}\sum_{d \in D_{\nu,\mu}}\Bigg[P(\nu \mid d)\prod_{\langle i j \rangle}  \Bigg[  (e^{2\beta J} - 1)^{{d_{i,j}}{\delta_{\mu_i, \mu_j}}}
 \Bigg]\Bigg]
 \]</span></p>
-<p>Similarly, $$ P() = {e^{-<em>{i j }2 J</em>{<em>i, <em>j}}}</em>{d D</em>{,}}]</p>
+<p>Similarly, <span class="math display">\[
+P(\nu \to \mu) = {e^{-\beta\sum_{\langle i j \rangle}2 J\delta_{\nu_i, \nu_j}}}\sum_{d \in D_{\nu,\mu}}\Bigg[P(\nu \mid d)\prod_{\langle i j \rangle}  \Bigg[  (e^{2\beta J} - 1)^{{d_{i,j}}{\delta_{\nu_i, \nu_j}}}
+\Bigg]\Bigg]
+\]</span></p>
 <p>Since for <span class="math inline">\(d \in D_{\nu,\mu}\)</span>, <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\nu\)</span> are both accessable states, for any <span class="math inline">\(d_{i,j} = 1\)</span>, this enforces that <span class="math inline">\(\delta_{\mu_i, \mu_j}\)</span> and <span class="math inline">\(\delta_{\nu_i, \nu_j}\)</span> must equal 1. It can be seen that <span class="math inline">\({d_{i,j}}{\delta_{\mu_i, \mu_j}} = {d_{i,j}}{\delta_{\nu_i, \nu_j}} = {d_{i,j}}\)</span></p>
 <p>Now, we can write</p>
 <p><span class="math display">\[
@@ -296,7 +299,7 @@ e^{-\beta\sum_{\langle i j \rangle}2 J(\delta_{\mu_i, \mu_j}-\delta_{\nu_i, \nu_
 e^{-\beta\sum_{\langle i j \rangle} J(2\delta_{\mu_i, \mu_j}-1-2\delta_{\nu_i, \nu_j}+1)}=
 e^{-\beta(\sum_{\langle i j \rangle} J(2\delta_{\mu_i, \mu_j}-1)-(-\sum_{\langle i j \rangle} J(2\delta_{\nu_i, \nu_j}-1)))}\\=
 e^{-\beta(H(\nu)-H(\mu))}
-\]</span> $$</p>
+\]</span></p>
 <p>As required. And so the Swendsen-Wang Algorythm satisfies detailed balance and will produce Ising Model Statistics.</p>
 
 
