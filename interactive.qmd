@@ -4,6 +4,7 @@ format: html
 execute:
   echo: false
   results: 'markup'
+  engine: jupyter 
 ---
 
 # Interactive Sine Wave Plot
