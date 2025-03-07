@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>interactive – Minimal Quarto Lab Book</title>
+<title>Mean Field Interactive demonstration – Minimal Quarto Lab Book</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -79,7 +79,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Mean Field Interactive demonstration</li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -104,21 +104,6 @@ ul.task-list li input[type="checkbox"] {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./timeline.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Timeline</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
- <span class="menu-text">The_Swendsen–Wang_Algorithm.ipynb</span>
-  </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Theory.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Ising Model Theory</span></a>
-  </div>
-</li>
     </ul>
     </div>
 </nav>
@@ -130,9 +115,42 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Mean Field Interactive demonstration</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>import numpy as np import plotly.graph_objects as go import ipywidgets as widgets from ipywidgets import interact</p>
+<p>def plot_sine_wave(T): x = np.linspace(-2, 2, 1000) y = np.tanh(4<em>(1/T)</em>x)</p>
+<pre><code>fig = go.Figure()
+
+fig.add_trace(go.Scatter(x=x, y=y, mode='lines', name=f"T = {T:.2f}"))
+fig.add_trace(go.Scatter(x=x, y=x, mode='lines', name=f"T = {T:.2f} (x)"))
+
+fig.update_layout(
+    title="Interactive Sine Wave",
+    xaxis_title=r"$\langle \sigma_i \rangle$",
+    yaxis_title=r"$\tanh(4 \beta \langle \sigma_i \rangle)$",
+    template="plotly_dark",
+    showlegend=True
+)
+
+fig.show()</code></pre>
+<p>interact(plot_sine_wave, T=widgets.FloatSlider(min=0.1, max=10, step=0.1, value=1.0))</p>
 
 
 
