@@ -12,7 +12,6 @@ website:
     search: true
     collapse-level: 1
     contents:
-      ipynb:
         - reasources.ipynb
         - 'Binder_recprocal .ipynb'
         - correlation_length.ipynb
@@ -23,7 +22,6 @@ website:
         - misc.ipynb
         - timeline.ipynb
         - notebook.ipynb
-      qmd:
         - index.qmd
 
 
