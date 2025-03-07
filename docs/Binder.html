@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Anything – Minimal Quarto Lab Book</title>
+<title>binder – Minimal Quarto Lab Book</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +67,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -79,7 +108,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./misc.html">Anything</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -125,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Critical_Exponents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Critical_Exponents.html</span></a>
+ <span class="menu-text">Finding The Critical Exponents</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -143,15 +172,12 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Critical_Slowing_down.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Swendsen–Wang Algorithm</span></a>
+ <span class="menu-text">The Problem of Critical Slowing Down</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./misc.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Anything</span></a>
-  </div>
-</li>
+ <span class="menu-text">misc.ipynb</span>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./timeline.html" class="sidebar-item-text sidebar-link">
@@ -159,13 +185,13 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./notebook.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example in <code>jupyter</code></span></a>
-  </div>
-</li>
+ <span class="menu-text">notebook.ipynb</span>
+  </li>
         <li class="sidebar-item">
  <span class="menu-text">index.qmd</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">interactive.qmd</span>
   </li>
     </ul>
     </div>
@@ -178,28 +204,50 @@ ul.task-list li input[type="checkbox"] {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Anything</h1>
+
+
+
+<p>As with the critical exponents section, a large number of simulations were run over a range of temperatures and simulation sizes. Although this section does not have consistent data used across each graph since methods were experimental and test data was used at first to minimize computation time, while checking validity of methods.</p>
+<p>Graph titles should be ‘Binder Cumulant’</p>
+<p>Given large samples of data of magnetization, the Binder Cumulant can be calculated from the distributions the standard formula</p>
+<p><span class="math display">\[
+U_N = 1 - \frac{\langle \sigma^4 \rangle}{3\langle \sigma^2 \rangle^ 2}
+\]</span></p>
+<p>A variety of methods were then used estimate intersections</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Binder_files/figure-html/cell-1-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
 </div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<p>Just start writing anything</p>
-<p>https://journals.aps.org/pr/pdf/10.1103/PhysRev.65.117</p>
-<p><img src="misc_files/figure-html/cell-1-2-image.png" class="img-fluid" alt="image.png"> <img src="misc_files/figure-html/cell-1-1-image-2.png" class="img-fluid" alt="image-2.png"></p>
+<p>First, polynomial fits were attempted. And the intersection points were then solved for each pair of polynomials. This tended to produce innacuraturate fits implying degree being too low but then also instability and overfitting when the degree was increased. Additionally the intersection points, which were averaged to be averaged to estimate the critical temperature had many false intersections caused by the additional occilations induced by the polynomial fits. Which heavily shifted the estimate away from the true critical temperature as can be seen from the graphs</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Binder_files/figure-html/cell-3-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p>Another method that was used was spline fitting. Which benifitted from more accurately representing local behaviour without being skewed by global behaviour. Which is important when determining a precice intersection point.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Binder_files/figure-html/cell-5-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Binder_files/figure-html/cell-6-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p>the above graph has rendering artifacts, the spline functions found were continuous.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Binder_files/figure-html/cell-8-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p>A method that was tried to avoid the issues with intersection points was to define a parameter which quantifies how close the spline functions are to eachother. This was effectively the reciprocal of the variance of the spline functions at a given temperature, and then finding the peak of this parameter. Although variance may be a missleading term to use in this context, it gave useful estimates of the critical temperature. It was noted in hindsight that this parameter was probably dominated by the furthest apart spline functions.</p>
 
 
 

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>critical_exponents – Minimal Quarto Lab Book</title>
+<title>Finding The Critical Exponents – Minimal Quarto Lab Book</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,6 +67,35 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -79,7 +108,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Critical_Exponents.html">Critical_Exponents.html</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Critical_Exponents.html">Finding The Critical Exponents</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -125,7 +154,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Critical_Exponents.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Critical_Exponents.html</span></a>
+ <span class="menu-text">Finding The Critical Exponents</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -143,15 +172,12 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Critical_Slowing_down.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Swendsen–Wang Algorithm</span></a>
+ <span class="menu-text">The Problem of Critical Slowing Down</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./misc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Anything</span></a>
-  </div>
-</li>
+ <span class="menu-text">misc.ipynb</span>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./timeline.html" class="sidebar-item-text sidebar-link">
@@ -159,31 +185,134 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./notebook.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example in <code>jupyter</code></span></a>
-  </div>
-</li>
+ <span class="menu-text">notebook.ipynb</span>
+  </li>
         <li class="sidebar-item">
  <span class="menu-text">index.qmd</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">interactive.qmd</span>
   </li>
     </ul>
     </div>
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#finding-nu" id="toc-finding-nu" class="nav-link active" data-scroll-target="#finding-nu"><span class="header-section-number">1</span> Finding <span class="math inline">\(\nu\)</span></a></li>
+  <li><a href="#finding-gamma" id="toc-finding-gamma" class="nav-link" data-scroll-target="#finding-gamma"><span class="header-section-number">2</span> Finding <span class="math inline">\(\gamma\)</span></a></li>
+  <li><a href="#finding-beta" id="toc-finding-beta" class="nav-link" data-scroll-target="#finding-beta"><span class="header-section-number">3</span> Finding <span class="math inline">\(\beta\)</span></a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Finding The Critical Exponents</h1>
+</div>
 
 
 
-<p>Hi</p>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
+</header>
+
+
+<section id="finding-nu" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="finding-nu"><span class="header-section-number">1</span> Finding <span class="math inline">\(\nu\)</span></h2>
+<p>First, simulations were run using the Swendsen-Wang implementation over a range of temperatures <span class="math inline">\(2\le T \le 3\)</span> and system sizes <span class="math inline">\(8\le N \le 256\)</span> for 1000 equilibrium steps and 10,000 measurement steps. The total magnetization and the total energy(the Hamiltonian) were saved at every time step and compiled into distributions. The suceptibility could then be calculated from the distribution using the standard formula given in the theory section. This entire process was repeated three times to give an estimate for error on each datapoint.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Critical_Exponents_files/figure-html/cell-2-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p>above the raw succeptibility data is presented showing assymtotic behaviour</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Critical_Exponents_files/figure-html/cell-4-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p>It was found that using a polynomial fit to find the peak produced large errors on the peak position. A Savitzky–Golay filter was instead selected, to make the peak finding alogythm more accurate. This method had some important benifits such as preserving peak hight effectively.</p>
+<p>The error on the maximum position was estimated by ‘bootstrap’ method which involved running the analysis process multiple times with gausian noise added to with raw data with standard deviation equal to the error in the data (divided by square root three since we want the error on the mean).</p>
+<p>The critical exponent can be derived directly using the relationship</p>
+<p><span class="math display">\[
+\lvert T_c(N^2) - T_c\rvert \propto N^{-1/\nu}
+\]</span></p>
+<p>so</p>
+<p><span class="math display">\[
+T_c(N^2) = T_c + A N^{-1/\nu}
+\]</span></p>
+<p>By taking the peak position vs system size data, scipy.optimize.curve_fit was used to find the parameters <span class="math inline">\(T_c, A, \nu\)</span> of the above equation.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Critical_Exponents_files/figure-html/cell-6-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p>This yielded a values of <span class="math inline">\(\nu = 1.00\pm0.07\quad T_c = 2.2742\)</span> and <span class="math inline">\(A = 1.7\pm0.5\)</span>. This method produced large errors since T_c was presumed unknown, so a log-log plot was not posible.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Critical_Exponents_files/figure-html/cell-8-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p>Above, the determined parameters were then plotted on a log-log plot to verify the relationship. It was noted that letting curve_fit find a value of T_c itself provided a much closer fit and a more linear relationship in the log-log regime than using our T_c found through the Binder Cumulant method. This is hypothesised to be because of divergence from ideal behaviour at low system sizes, skewing the fit.</p>
+</section>
+<section id="finding-gamma" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="finding-gamma"><span class="header-section-number">2</span> Finding <span class="math inline">\(\gamma\)</span></h2>
+<p>As discussed in the theory section, the relationship</p>
+<p><span class="math display">\[
+    \log \chi_{M,\text{peak}} =\frac{\gamma}{\nu}\log N
+\]</span></p>
+<p>can be used to find the ratio of these two critical exponents</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Critical_Exponents_files/figure-html/cell-10-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Critical_Exponents_files/figure-html/cell-11-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p>By linear fitting to the log-log plot shown in the second image,<span class="math inline">\(\gamma/\mu\)</span> was calculated tp be . Leading to a value of <span class="math inline">\(\gamma\)</span></p>
+</section>
+<section id="finding-beta" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="finding-beta"><span class="header-section-number">3</span> Finding <span class="math inline">\(\beta\)</span></h2>
+<p>The relation <span class="math display">\[
+\langle |\sigma|\rangle \propto |T-T_c|^\beta
+\]</span> leading to</p>
+<p><span class="math display">\[
+\log {\langle |\sigma|\rangle} = \frac{\beta}{\nu}\log N
+\]</span></p>
+<p>at the psudo-critical point can be used in a similar mannor to find <span class="math inline">\(\beta\)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Critical_Exponents_files/figure-html/cell-13-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p><span class="math inline">\(\beta\)</span> was found to have a value of</p>
+
+
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

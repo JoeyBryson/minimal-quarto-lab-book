@@ -1,22 +1,49 @@
 [
   {
-    "objectID": "notebook.html",
-    "href": "notebook.html",
-    "title": "Example in jupyter",
+    "objectID": "demo.html",
+    "href": "demo.html",
+    "title": "Minimal Quarto Lab Book",
     "section": "",
-    "text": "from __future__ import division\nimport numpy as np\nfrom numpy.random import rand\nimport matplotlib.pyplot as plt\n\n\n#----------------------------------------------------------------------\n##  BLOCK OF FUNCTIONS USED IN THE MAIN CODE\n#----------------------------------------------------------------------\ndef initialstate(N):   \n    ''' generates a random spin configuration for initial condition'''\n    state = 2*np.random.randint(2, size=(N,N))-1\n    return state\n\n\ndef mcmove(config, beta):\n    '''Monte Carlo move using Metropolis algorithm '''\n    for i in range(N):\n        for j in range(N):\n                a = np.random.randint(0, N)\n                b = np.random.randint(0, N)\n                s =  config[a, b]\n                nb = config[(a+1)%N,b] + config[a,(b+1)%N] + config[(a-1)%N,b] + config[a,(b-1)%N]\n                cost = 2*s*nb\n                if cost &lt; 0:\n                    s *= -1\n                elif rand() &lt; np.exp(-cost*beta):\n                    s *= -1\n                config[a, b] = s\n    return config\n\n\ndef calcEnergy(config):\n    '''Energy of a given configuration'''\n    energy = 0\n    for i in range(len(config)):\n        for j in range(len(config)):\n            S = config[i,j]\n            nb = config[(i+1)%N, j] + config[i,(j+1)%N] + config[(i-1)%N, j] + config[i,(j-1)%N]\n            energy += -nb*S\n    return energy/4.\n\n\ndef calcMag(config):\n    '''Magnetization of a given configuration'''\n    mag = np.sum(config)\n    return mag\n\n\n## change these parameters for a smaller (faster) simulation \nnt      = 4         #  number of temperature points\nN       = 8         #  size of the lattice, N x N\neqSteps = 1024       #  number of MC sweeps for equilibration\nmcSteps = 1024       #  number of MC sweeps for calculation\n\nT       = np.linspace(1.53, 3.28, nt) \nE,M,C,X = np.zeros(nt), np.zeros(nt), np.zeros(nt), np.zeros(nt)\nn1, n2  = 1.0/(mcSteps*N*N), 1.0/(mcSteps*mcSteps*N*N) \n# divide by number of samples, and by system size to get intensive values\n\n\n#----------------------------------------------------------------------\n#  MAIN PART OF THE CODE\n#----------------------------------------------------------------------\nfor tt in range(nt):\n    print(tt)\n    E1 = M1 = E2 = M2 = 0\n    config = initialstate(N)\n    iT=1.0/T[tt]; iT2=iT*iT;\n    \n    for i in range(eqSteps):         # equilibrate\n        mcmove(config, iT)           # Monte Carlo moves\n\n    for i in range(mcSteps):\n        mcmove(config, iT)           \n        Ene = calcEnergy(config)     # calculate the energy\n        Mag = calcMag(config)        # calculate the magnetisation\n\n        E1 = E1 + Ene\n        M1 = M1 + Mag\n        M2 = M2 + Mag*Mag \n        E2 = E2 + Ene*Ene\n\n    E[tt] = n1*E1\n    M[tt] = n1*M1\n    C[tt] = (n1*E2 - n2*E1*E1)*iT2\n    X[tt] = (n1*M2 - n2*M1*M1)*iT\n\n0\n1\n2\n3\n\n\n\nf = plt.figure(figsize=(18, 10)); # plot the calculated values    \n\nsp =  f.add_subplot(2, 2, 1 );\nplt.scatter(T, E, s=50, marker='o', color='IndianRed')\nplt.xlabel(\"Temperature (T)\", fontsize=20);\nplt.ylabel(\"Energy \", fontsize=20);         plt.axis('tight');\n\nsp =  f.add_subplot(2, 2, 2 );\nplt.scatter(T, abs(M), s=50, marker='o', color='RoyalBlue')\nplt.xlabel(\"Temperature (T)\", fontsize=20); \nplt.ylabel(\"Magnetization \", fontsize=20);   plt.axis('tight');\n\nsp =  f.add_subplot(2, 2, 3 );\nplt.scatter(T, C, s=50, marker='o', color='IndianRed')\nplt.xlabel(\"Temperature (T)\", fontsize=20);  \nplt.ylabel(\"Specific Heat \", fontsize=20);   plt.axis('tight');   \n\nsp =  f.add_subplot(2, 2, 4 );\nplt.scatter(T, X, s=50, marker='o', color='RoyalBlue')\nplt.xlabel(\"Temperature (T)\", fontsize=20); \nplt.ylabel(\"Susceptibility\", fontsize=20);   plt.axis('tight');",
-    "crumbs": [
-      "Example in `jupyter`"
-    ]
+    "text": "Please run locally, I couldn’t figure out how to get quarto to make this work\n\nimport numpy as np\nimport matplotlib.pyplot as plt\nimport ipywidgets as widgets\nfrom ipywidgets import interact\n\ndef plot_sine_wave(T):\n    x = np.linspace(-2, 2, 1000)\n    y = np.tanh(4*(1/T)*x)\n\n    plt.figure(figsize=(8, 4))\n    plt.plot(x, y, label=r\"$\\tanh(4 \\beta \\langle \\sigma_i \\rangle )$\")\n    plt.plot(x, x, label=r\"$\\langle \\sigma_i \\rangle$\")\n    plt.legend()\n    plt.xlabel(r\"$\\langle \\sigma_i \\rangle$\")\n    plt.ylabel(r\"$\\tanh(4 \\beta \\langle \\sigma_i \\rangle )$\")\n    plt.grid(True)\n    plt.title(\"figure 1\")\n    plt.show()\n\ninteract(plot_sine_wave, T=widgets.FloatSlider(min=0.1, max=10, step=0.1, value=1.0))\n\n\n\n\n&lt;function __main__.plot_sine_wave(T)&gt;"
   },
   {
     "objectID": "Critical_Exponents.html",
     "href": "Critical_Exponents.html",
-    "title": "Minimal Quarto Lab Book",
+    "title": "Finding The Critical Exponents",
     "section": "",
-    "text": "Hi",
+    "text": "First, simulations were run using the Swendsen-Wang implementation over a range of temperatures \\(2\\le T \\le 3\\) and system sizes \\(8\\le N \\le 256\\) for 1000 equilibrium steps and 10,000 measurement steps. The total magnetization and the total energy(the Hamiltonian) were saved at every time step and compiled into distributions. The suceptibility could then be calculated from the distribution using the standard formula given in the theory section. This entire process was repeated three times to give an estimate for error on each datapoint.\n\n\n\nimage.png\n\n\nabove the raw succeptibility data is presented showing assymtotic behaviour\n\n\n\nimage.png\n\n\nIt was found that using a polynomial fit to find the peak produced large errors on the peak position. A Savitzky–Golay filter was instead selected, to make the peak finding alogythm more accurate. This method had some important benifits such as preserving peak hight effectively.\nThe error on the maximum position was estimated by ‘bootstrap’ method which involved running the analysis process multiple times with gausian noise added to with raw data with standard deviation equal to the error in the data (divided by square root three since we want the error on the mean).\nThe critical exponent can be derived directly using the relationship\n\\[\n\\lvert T_c(N^2) - T_c\\rvert \\propto N^{-1/\\nu}\n\\]\nso\n\\[\nT_c(N^2) = T_c + A N^{-1/\\nu}\n\\]\nBy taking the peak position vs system size data, scipy.optimize.curve_fit was used to find the parameters \\(T_c, A, \\nu\\) of the above equation.\n\n\n\nimage.png\n\n\nThis yielded a values of \\(\\nu = 1.00\\pm0.07\\quad T_c = 2.2742\\) and \\(A = 1.7\\pm0.5\\). This method produced large errors since T_c was presumed unknown, so a log-log plot was not posible.\n\n\n\nimage.png\n\n\nAbove, the determined parameters were then plotted on a log-log plot to verify the relationship. It was noted that letting curve_fit find a value of T_c itself provided a much closer fit and a more linear relationship in the log-log regime than using our T_c found through the Binder Cumulant method. This is hypothesised to be because of divergence from ideal behaviour at low system sizes, skewing the fit.",
     "crumbs": [
-      "Critical_Exponents.html"
+      "Finding The Critical Exponents"
+    ]
+  },
+  {
+    "objectID": "Critical_Exponents.html#finding-nu",
+    "href": "Critical_Exponents.html#finding-nu",
+    "title": "Finding The Critical Exponents",
+    "section": "",
+    "text": "First, simulations were run using the Swendsen-Wang implementation over a range of temperatures \\(2\\le T \\le 3\\) and system sizes \\(8\\le N \\le 256\\) for 1000 equilibrium steps and 10,000 measurement steps. The total magnetization and the total energy(the Hamiltonian) were saved at every time step and compiled into distributions. The suceptibility could then be calculated from the distribution using the standard formula given in the theory section. This entire process was repeated three times to give an estimate for error on each datapoint.\n\n\n\nimage.png\n\n\nabove the raw succeptibility data is presented showing assymtotic behaviour\n\n\n\nimage.png\n\n\nIt was found that using a polynomial fit to find the peak produced large errors on the peak position. A Savitzky–Golay filter was instead selected, to make the peak finding alogythm more accurate. This method had some important benifits such as preserving peak hight effectively.\nThe error on the maximum position was estimated by ‘bootstrap’ method which involved running the analysis process multiple times with gausian noise added to with raw data with standard deviation equal to the error in the data (divided by square root three since we want the error on the mean).\nThe critical exponent can be derived directly using the relationship\n\\[\n\\lvert T_c(N^2) - T_c\\rvert \\propto N^{-1/\\nu}\n\\]\nso\n\\[\nT_c(N^2) = T_c + A N^{-1/\\nu}\n\\]\nBy taking the peak position vs system size data, scipy.optimize.curve_fit was used to find the parameters \\(T_c, A, \\nu\\) of the above equation.\n\n\n\nimage.png\n\n\nThis yielded a values of \\(\\nu = 1.00\\pm0.07\\quad T_c = 2.2742\\) and \\(A = 1.7\\pm0.5\\). This method produced large errors since T_c was presumed unknown, so a log-log plot was not posible.\n\n\n\nimage.png\n\n\nAbove, the determined parameters were then plotted on a log-log plot to verify the relationship. It was noted that letting curve_fit find a value of T_c itself provided a much closer fit and a more linear relationship in the log-log regime than using our T_c found through the Binder Cumulant method. This is hypothesised to be because of divergence from ideal behaviour at low system sizes, skewing the fit.",
+    "crumbs": [
+      "Finding The Critical Exponents"
+    ]
+  },
+  {
+    "objectID": "Critical_Exponents.html#finding-gamma",
+    "href": "Critical_Exponents.html#finding-gamma",
+    "title": "Finding The Critical Exponents",
+    "section": "2 Finding \\(\\gamma\\)",
+    "text": "2 Finding \\(\\gamma\\)\nAs discussed in the theory section, the relationship\n\\[\n    \\log \\chi_{M,\\text{peak}} =\\frac{\\gamma}{\\nu}\\log N\n\\]\ncan be used to find the ratio of these two critical exponents\n\n\n\nimage.png\n\n\n\n\n\nimage.png\n\n\nBy linear fitting to the log-log plot shown in the second image,\\(\\gamma/\\mu\\) was calculated tp be . Leading to a value of \\(\\gamma\\)",
+    "crumbs": [
+      "Finding The Critical Exponents"
+    ]
+  },
+  {
+    "objectID": "Critical_Exponents.html#finding-beta",
+    "href": "Critical_Exponents.html#finding-beta",
+    "title": "Finding The Critical Exponents",
+    "section": "3 Finding \\(\\beta\\)",
+    "text": "3 Finding \\(\\beta\\)\nThe relation \\[\n\\langle |\\sigma|\\rangle \\propto |T-T_c|^\\beta\n\\] leading to\n\\[\n\\log {\\langle |\\sigma|\\rangle} = \\frac{\\beta}{\\nu}\\log N\n\\]\nat the psudo-critical point can be used in a similar mannor to find \\(\\beta\\).\n\n\n\nimage.png\n\n\n\\(\\beta\\) was found to have a value of",
+    "crumbs": [
+      "Finding The Critical Exponents"
     ]
   },
   {
@@ -71,7 +98,7 @@
     "href": "Theory.html#finding-the-critical-exponents-through-numerical-simulation",
     "title": "Ising Model Theory",
     "section": "1.3 Finding The Critical exponents through numerical simulation",
-    "text": "1.3 Finding The Critical exponents through numerical simulation\n\n\n\nimage.png\n\n\nFigure 4: Correlation Length against temperature in the critical region, for an N = 32 system derived by a method outlined here(URL)\n\n\n\nimage.png\n\n\nFigure 5: Above is data from an Ising Model simulation discussed here(URL) which shows the behaviour of four key quantities around the critical temperature\nOne of the main objectives of this lab is to find numerical estimates for the critical exponents through computational simulation. Returning to the correlation length\n\\[\n\\xi \\propto |T-T_c|^{-\\nu}\n\\]\nas the temperature aproaches criticallity, any numerical simulation will be insuffiecient to accomodate a growing correlation length, we use periodic boundary conditions, meaning that effectively no two points can be more that \\(N\\) distance away from eachother. The increase in correlation length can be thought of as source of the critical behaviour of the other system variables, and so it makes sense that where the correlation length is maximum the system behaves as if at criticality. This means that for a system of length \\(N\\) there is a Psudocritical point where \\(\\xi \\sim N\\) the variables will behave closest to true criticallity, and there will be a psudocritical temperature \\(T_c(N^2)\\) at which this happens. It follows that\n\\[\n    \\xi \\sim N\\propto \\bigg \\lvert T_c(N^2) - T_c\\bigg\\rvert^{-\\nu} \\quad \\Rightarrow \\quad \\bigg\\lvert T_c(N^2) - T_c\\bigg\\rvert \\propto N^{-1/\\nu}\n\\]\nOne way we can find the Psudocritical point by measureing the peak of \\(\\chi_M\\), since this is directly caused by the increase in correlation lenths. We have \\[\n\\chi_{M,\\text{peak}} \\propto |T_c(N^2)-T_c(\\infty)|^{-\\gamma}  \\propto N^{\\gamma/\\nu}\n\\]\nIt follows that\n\\[\n    \\log \\chi_{M,\\text{peak}} =\\frac{\\gamma}{\\nu}\\log N\n\\] from which \\(z=\\gamma/\\nu\\) can be found.",
+    "text": "1.3 Finding The Critical exponents through numerical simulation\n\n\n\nimage.png\n\n\nFigure 4: Correlation Length against temperature in the critical region, for an N = 32 system derived by a method outlined here(URL)\n\n\n\nimage.png\n\n\nFigure 5: Above is data from an Ising Model simulation discussed here(URL) which shows the behaviour of four key quantities around the critical temperature\nOne of the main objectives of this lab is to find numerical estimates for the critical exponents through computational simulation. Returning to the correlation length\n\\[\n\\xi \\propto |T-T_c|^{-\\nu}\n\\]\nas the temperature aproaches criticallity, any numerical simulation will be insuffiecient to accomodate a growing correlation length, we use periodic boundary conditions, meaning that effectively no two points can be more that \\(N\\) distance away from eachother. The increase in correlation length can be thought of as source of the critical behaviour of the other system variables, and so it makes sense that where the correlation length is maximum the system behaves as if at criticality. This means that for a system of length \\(N\\) there is a Psudocritical point where \\(\\xi \\sim N\\) the variables will behave closest to true criticallity, and there will be a psudocritical temperature \\(T_c(N^2)\\) at which this happens. It follows that\n\\[\n    \\xi \\sim N\\propto  \\lvert T_c(N^2) - T_c\\rvert^{-\\nu} \\quad \\Rightarrow \\quad \\lvert T_c(N^2) - T_c\\rvert \\propto N^{-1/\\nu}\n\\]\nOne way we can find the Psudocritical point by measureing the peak of \\(\\chi_M\\), since this is directly caused by the increase in correlation lenths. We have \\[\n\\chi_{M,\\text{peak}} \\propto |T_c(N^2)-T_c(\\infty)|^{-\\gamma}  \\propto N^{\\gamma/\\nu}\n\\]\nIt follows that\n\\[\n    \\log \\chi_{M,\\text{peak}} =\\frac{\\gamma}{\\nu}\\log N\n\\] from which \\(z=\\gamma/\\nu\\) can be found.",
     "crumbs": [
       "Ising Model Theory"
     ]
@@ -87,23 +114,13 @@
     ]
   },
   {
-    "objectID": "correlation_length.html",
-    "href": "correlation_length.html",
-    "title": "Minimal Quarto Lab Book",
+    "objectID": "Critical_Slowing_down.html",
+    "href": "Critical_Slowing_down.html",
+    "title": "The Problem of Critical Slowing Down",
     "section": "",
-    "text": "image.png\n\n\n\n\n\n\nimage.png",
+    "text": "The Metropolis-Hastings algorithm can theoretically produce representative statistics for the Ising model, given a sufficiently long amount of simulation time. However, as the temperature approaches the critical temperature, the amount of time required for the system to reach an equlibrium state increases assymtotically. This effect is known as Critical Slowing Down, and given the practical limits of computation, can severely reduce the accuracy (relative to the theoretical limit) of data generated. Metropolis-Hastings simulations were run over for a simulation time of 1000 equalization steps and 10000 measuremement steps. Bellow, are graphs of the average energy, magnetization, the variance of their distibutions specific heat and susceptibility against temperature for the measurement period of the simulation. It can be observed that around the Critical Temprerature \\(T_c = 2.269\\) the graphs become irregular and stochastic, indicating the simulations were not run for a sufficient amount of time to cycle through enough states to reprasatitatively achieve the theoretical distributions.\n\n\n\nimage-2.png\n\n\nThis can be explained through the parameter of Relaxation Time. We define relation time arbitrarily by the number of simulation steps \\(\\tau\\) for the autocorrelation function \\(C(\\tau)\\) of the Magetization \\(M(t)\\) defined by \\(C(\\tau) = \\langle M(t) M(t+\\tau) \\rangle - \\langle M(t) \\rangle^2\\) to drop below 0.1. This can be thought of as the number of simulation steps before a given spin is only 10% caused by it’s initial state. In the metropolis Hastings algorythm, relaxation time is directly related to correlation length, because the mechanism of action is spacial. It increases or decreases cluster sizes incrementally and the correlation length bounds how fast it can do this.\n\n\n\nattachment:relaxation_time.png\n\n\nWhen the Relaxitation time is on the order of the simulation length as can be seen above, the simulation data is not representative of the theoretical statistics at the thermodynamic limit we want to investigate.\n\n1 The Swendsen-Wang algorythm\nhttps://www.inference.org.uk/itila/swendsen.pdf The Swendsen-Wang Algorythm addresses this issue. It also produces Ising Model Statistics as shown in the theory section, however it also cycles a wider range of states much more efficiently at the critical temperature. Bellow are some graphs of the same quantities presented earlier after the same amount of simulation steps, except using the Swendsen- Wang algorythm.\n\n\n\nimage.png\n\n\nThese graphs show stability across the whole temperature regime. For this reason we used the Swendsen-Wang algorythm for all further investigation of Critical Phenomena in this lab",
     "crumbs": [
-      "correlation_length.html"
-    ]
-  },
-  {
-    "objectID": "intro.html",
-    "href": "intro.html",
-    "title": "First Session",
-    "section": "",
-    "text": "16/ 01/ 2025\nThe first session was spent understanding the basic ideas behind the Ising Model and creating a workflow enviroment using Git. A repository was made for colaborative developement of experimental code, and forks were made from a template for indidual Quarto lab books.",
-    "crumbs": [
-      "First Session"
+      "The Problem of Critical Slowing Down"
     ]
   },
   {
@@ -117,23 +134,23 @@
     ]
   },
   {
-    "objectID": "Critical_Slowing_down.html",
-    "href": "Critical_Slowing_down.html",
-    "title": "The Swendsen–Wang Algorithm",
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "First Session",
     "section": "",
-    "text": "https://www.inference.org.uk/itila/swendsen.pdf\nUp to this point in the lab, the algorithm used to evolve the system into an equilibrium state, and then cycle through enough states to collect a representative sample of the distributions of Energy and Magnetization, was the Metropolis-Hastings Algorithm. This algorithm chose a single cell at random and flipped it with a probability according it’s own spin state and the spin state of it’s nearest neighbours. This is possible because the Hamiltonian defining the Ising Model:\n\\(H = -J \\sum_{\\langle i j \\rangle} S_i S_j.\\)\ndepends only on the interactions between the cells i and j which are defined by the notation \\(\\langle i j \\rangle\\) to be adjacent. Therefore, the metropolis algothithm can accurately reproduce this hamiltonian by only considering the local energy change of flipping a single cell.\n\n0.1 The Problem of Critical Slowing Down\nThe Metropolis-Hastings algorithm can theoretically produce representative statistics for the Ising model, given a sufficiently long amount of simulation time. However, as the temperature approaches the critical temperature, the amount of time required for the system to reach an equlibrium state increases assymtotically. This effect is known as Critical Slowing Down, and given the practical limits of computation, can severely reduce the accuracy (relative to the theoretical limit) of data generated. Simulations were run over for a simulation time of 1000 equalization steps and 10000 measuremement steps. Bellow, are graphs of the average energy, magnetization, the variance of their distibutions specific heat and susceptibility against temperature for the measurement period of the simulation. It can be observed that around the Critical Temprerature \\(T_c = 2.269\\) the graphs become irregular and stochastic, indicating the simulations were not run for a sufficient amount of time to cycle through enough states to reprasatitatively achieve the theoretical distributions. https://www.inference.org.uk/itila/swendsen.pdf\nhttps://journals.aps.org/prl/pdf/10.1103/PhysRevLett.58.86\n\n\n\nimage-2.png\n\n\nThis can be explained through the parameter of Relaxation Time. We define relation time arbitrarily by the number of simulation steps \\(\\tau\\) for the autocorrelation function \\(C(\\tau)\\) of the Magetization \\(M(t)\\) defined by \\(C(\\tau) = \\langle M(t) M(t+\\tau) \\rangle - \\langle M(t) \\rangle^2\\) to drop below 0.1. This corresponds to the number of\n\n\n\nattachment:relaxation_time.png\n\n\n\n\n\nimage.png",
+    "text": "16/ 01/ 2025\nThe first session was spent understanding the basic ideas behind the Ising Model and creating a workflow enviroment using Git. A repository was made for colaborative developement of experimental code, and forks were made from a template for indidual Quarto lab books.",
     "crumbs": [
-      "The Swendsen–Wang Algorithm"
+      "First Session"
     ]
   },
   {
-    "objectID": "misc.html",
-    "href": "misc.html",
-    "title": "Anything",
+    "objectID": "correlation_length.html",
+    "href": "correlation_length.html",
+    "title": "Minimal Quarto Lab Book",
     "section": "",
-    "text": "Just start writing anything\nhttps://journals.aps.org/pr/pdf/10.1103/PhysRev.65.117",
+    "text": "A small investigation was made into finding the correlation length \\(\\xi(T)\\) directly from it’s definition\n\\[\n\\langle (\\sigma_i - \\langle \\sigma_i \\rangle)(\\sigma_j -  \\langle \\sigma_j \\rangle) \\rangle \\sim e^{-\\frac{|x - y|}{\\xi(T)}}\n\\]\nfirst an N = 32 simulation was run for 4000 time steps. This would normally be a very quick operation, but in this investigation analysis was done as the simulation ran. The correlations between every pair of points in the lattice was calculated using many, averaged Kroniker Products of an array matrix representing the spins subtract the system magnetization mean(as in the definition above), with itself. A corresponding matrix of distance between every pair of points in the same format as the Kroneker Product Matrix was generated.\nThen every element in these two matrices against eachother and the result is plotted bellow.\n\n\n\nimage-2.png\n\n\nabove: T = 2\n\n\n\nimage.png\n\n\nAbove T = 2.269\n\n\n\nimage.png\n\n\nAbove: T = 3\nThe graph above is for T = 2 so correlation length is very small. the features at 32 are the correlation of points on the border of the system with eachother and the feature at the end corresponds to corners.\n\nTo minimize finite size effects as can be seen to be very prevalent in the T_c case, a segment of the data from distance 1 to 5 is taken and an exponential fit is used to deter\nRepeating this process for many temperatures, the expected form of correlation length against temperature is found. However around the critical temperature, the estimates are obviously truncated heavily. Taking a wider range of distance only resulted in lower accuracy.\n\n\n\nimage.png\n\n\nA Clear peak around T_c is observed. The truncation is likely due to finite size effects. This graph corresponds to the form of the succeptibility graphs from the critical exponents section.",
     "crumbs": [
-      "Anything"
+      "correlation_length.html"
     ]
   },
   {
@@ -147,14 +164,11 @@
     ]
   },
   {
-    "objectID": "interactive.html",
-    "href": "interactive.html",
-    "title": "Interactive Plot Example",
+    "objectID": "Binder.html",
+    "href": "Binder.html",
+    "title": "Minimal Quarto Lab Book",
     "section": "",
-    "text": "1 Interactive Sine Wave Plot\nThis is an interactive plot where the value of T is controlled by a slider.\nimport numpy as np import plotly.graph_objects as go import ipywidgets as widgets from ipywidgets import interact\ndef plot_sine_wave(T): x = np.linspace(-2, 2, 1000) y = np.tanh(4 * (1/T) * x)\nfig = go.Figure()\nfig.aadd_trace(go.Scatter(x=x, y=y, mode='lines', name=f\"T = {T:.2f}\"))\nfig.add_trace(go.Scatter(x=x, y=x, mode='lines', name=f\"T = {T:.2f} (x)\"))\n\nfig.update_layout(\n    title=\"Interactive Sine Wave\",\n    xaxis_title=r\"$\\langle \\sigma_i \\rangle$\",\n    yaxis_title=r\"$\\tanh(4 \\beta \\langle \\sigma_i \\rangle)$\",\n    template=\"plotly_dark\",\n    showlegend=True\n)\n\nfig.show()\ninteract(plot_sine_wave, T=widgets.FloatSlider(min=0.1, max=10, step=0.1, value=1.0))",
-    "crumbs": [
-      "Interactive Plot Example"
-    ]
+    "text": "As with the critical exponents section, a large number of simulations were run over a range of temperatures and simulation sizes. Although this section does not have consistent data used across each graph since methods were experimental and test data was used at first to minimize computation time, while checking validity of methods.\nGraph titles should be ‘Binder Cumulant’\nGiven large samples of data of magnetization, the Binder Cumulant can be calculated from the distributions the standard formula\n\\[\nU_N = 1 - \\frac{\\langle \\sigma^4 \\rangle}{3\\langle \\sigma^2 \\rangle^ 2}\n\\]\nA variety of methods were then used estimate intersections\n\n\n\nimage.png\n\n\nFirst, polynomial fits were attempted. And the intersection points were then solved for each pair of polynomials. This tended to produce innacuraturate fits implying degree being too low but then also instability and overfitting when the degree was increased. Additionally the intersection points, which were averaged to be averaged to estimate the critical temperature had many false intersections caused by the additional occilations induced by the polynomial fits. Which heavily shifted the estimate away from the true critical temperature as can be seen from the graphs\n\n\n\nimage.png\n\n\nAnother method that was used was spline fitting. Which benifitted from more accurately representing local behaviour without being skewed by global behaviour. Which is important when determining a precice intersection point.\n\n\n\nimage.png\n\n\n\n\n\nimage.png\n\n\nthe above graph has rendering artifacts, the spline functions found were continuous.\n\n\n\nimage.png\n\n\nA method that was tried to avoid the issues with intersection points was to define a parameter which quantifies how close the spline functions are to eachother. This was effectively the reciprocal of the variance of the spline functions at a given temperature, and then finding the peak of this parameter. Although variance may be a missleading term to use in this context, it gave useful estimates of the critical temperature. It was noted in hindsight that this parameter was probably dominated by the furthest apart spline functions."
   },
   {
     "objectID": "timeline.html",

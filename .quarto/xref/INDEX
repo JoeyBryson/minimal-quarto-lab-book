@@ -43,5 +43,11 @@
   },
   "interactive.qmd": {
     "interactive.html": "69e57974"
+  },
+  "Binder.ipynb": {
+    "Binder.html": "7a526896"
+  },
+  "demo.ipynb": {
+    "demo.html": "96d3048b"
   }
 }

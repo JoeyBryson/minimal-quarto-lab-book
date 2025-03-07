@@ -154,7 +154,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Critical_Exponents.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Critical_Exponents.html</span></a>
+ <span class="menu-text">Finding The Critical Exponents</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -172,15 +172,12 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Critical_Slowing_down.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Swendsen–Wang Algorithm</span></a>
+ <span class="menu-text">The Problem of Critical Slowing Down</span></a>
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./misc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Anything</span></a>
-  </div>
-</li>
+ <span class="menu-text">misc.ipynb</span>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./timeline.html" class="sidebar-item-text sidebar-link">
@@ -188,13 +185,13 @@ window.Quarto = {
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./notebook.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Example in <code>jupyter</code></span></a>
-  </div>
-</li>
+ <span class="menu-text">notebook.ipynb</span>
+  </li>
         <li class="sidebar-item">
  <span class="menu-text">index.qmd</span>
+  </li>
+        <li class="sidebar-item">
+ <span class="menu-text">interactive.qmd</span>
   </li>
     </ul>
     </div>
@@ -466,7 +463,7 @@ C_V \propto |T-T_c|^{-\alpha}\\
 \]</span></p>
 <p>as the temperature aproaches criticallity, any numerical simulation will be insuffiecient to accomodate a growing correlation length, we use periodic boundary conditions, meaning that effectively no two points can be more that <span class="math inline">\(N\)</span> distance away from eachother. The increase in correlation length can be thought of as source of the critical behaviour of the other system variables, and so it makes sense that where the correlation length is maximum the system behaves as if at criticality. This means that for a system of length <span class="math inline">\(N\)</span> there is a <strong>Psudocritical</strong> point where <span class="math inline">\(\xi \sim N\)</span> the variables will behave closest to true criticallity, and there will be a psudocritical temperature <span class="math inline">\(T_c(N^2)\)</span> at which this happens. It follows that</p>
 <p><span class="math display">\[
-    \xi \sim N\propto \bigg \lvert T_c(N^2) - T_c\bigg\rvert^{-\nu} \quad \Rightarrow \quad \bigg\lvert T_c(N^2) - T_c\bigg\rvert \propto N^{-1/\nu}
+    \xi \sim N\propto  \lvert T_c(N^2) - T_c\rvert^{-\nu} \quad \Rightarrow \quad \lvert T_c(N^2) - T_c\rvert \propto N^{-1/\nu}
 \]</span></p>
 <p>One way we can find the Psudocritical point by measureing the peak of <span class="math inline">\(\chi_M\)</span>, since this is directly caused by the increase in correlation lenths. We have <span class="math display">\[
 \chi_{M,\text{peak}} \propto |T_c(N^2)-T_c(\infty)|^{-\gamma}  \propto N^{\gamma/\nu}
