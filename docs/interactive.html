@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The Swendsen–Wang Algorithm – Minimal Quarto Lab Book</title>
+<title>interactive – Minimal Quarto Lab Book</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,35 +67,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -108,7 +79,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./The_Swendsen–Wang_Algorithm.html">The Swendsen–Wang Algorithm</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -140,11 +111,8 @@ window.Quarto = {
   </div>
 </li>
         <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./The_Swendsen–Wang_Algorithm.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">The Swendsen–Wang Algorithm</span></a>
-  </div>
-</li>
+ <span class="menu-text">The_Swendsen–Wang_Algorithm.ipynb</span>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Theory.html" class="sidebar-item-text sidebar-link">
@@ -156,67 +124,17 @@ window.Quarto = {
 </nav>
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#the-problem-of-critical-slowing-down" id="toc-the-problem-of-critical-slowing-down" class="nav-link active" data-scroll-target="#the-problem-of-critical-slowing-down"><span class="header-section-number">0.1</span> The Problem of Critical Slowing Down</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">The Swendsen–Wang Algorithm</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
 
 
-</header>
-
-
-<p>https://www.inference.org.uk/itila/swendsen.pdf</p>
-<p>Up to this point in the lab, the algorithm used to evolve the system into an equilibrium state, and then cycle through enough states to collect a representative sample of the distributions of Energy and Magnetization, was the Metropolis-Hastings Algorithm. This algorithm chose a single cell at random and flipped it with a probability according it’s own spin state and the spin state of it’s nearest neighbours. This is possible because the Hamiltonian defining the Ising Model:</p>
-<p><span class="math inline">\(H = -J \sum_{\langle i j \rangle} S_i S_j.\)</span></p>
-<p>depends only on the interactions between the cells i and j which are defined by the notation <span class="math inline">\(\langle i j \rangle\)</span> to be adjacent. Therefore, the metropolis algothithm can accurately reproduce this hamiltonian by only considering the local energy change of flipping a single cell.</p>
-<section id="the-problem-of-critical-slowing-down" class="level3" data-number="0.1">
-<h3 data-number="0.1" class="anchored" data-anchor-id="the-problem-of-critical-slowing-down"><span class="header-section-number">0.1</span> The Problem of Critical Slowing Down</h3>
-<p>The Metropolis-Hastings algorithm can theoretically produce representative statistics for the Ising model, given a sufficiently long amount of simulation time. However, as the temperature approaches the critical temperature, the amount of time required for the system to reach an equlibrium state increases assymtotically. This effect is known as Critical Slowing Down, and given the practical limits of computation, can severely reduce the accuracy (relative to the theoretical limit) of data generated. Simulations were run over for a simulation time of 1000 equalization steps and 10000 measuremement steps. Bellow, are graphs of the average energy, magnetization, the variance of their distibutions specific heat and susceptibility against temperature for the measurement period of the simulation. It can be observed that around the Critical Temprerature <span class="math inline">\(T_c = 2.269\)</span> the graphs become irregular and stochastic, indicating the simulations were not run for a sufficient amount of time to cycle through enough states to reprasatitatively achieve the theoretical distributions. https://www.inference.org.uk/itila/swendsen.pdf<br>
-https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.58.86</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="The_Swendsen–Wang_Algorithm_files/figure-html/cell-2-1-image-2.png" class="img-fluid figure-img"></p>
-<figcaption>image-2.png</figcaption>
-</figure>
-</div>
-<p>This can be explained through the parameter of Relaxation Time. We define relation time arbitrarily by the number of simulation steps <span class="math inline">\(\tau\)</span> for the autocorrelation function <span class="math inline">\(C(\tau)\)</span> of the Magetization <span class="math inline">\(M(t)\)</span> defined by <span class="math inline">\(C(\tau) = \langle M(t) M(t+\tau) \rangle - \langle M(t) \rangle^2\)</span> to drop below 0.1. This corresponds to the number of</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="relaxation_time.png" class="img-fluid figure-img"></p>
-<figcaption>attachment:relaxation_time.png</figcaption>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="The_Swendsen–Wang_Algorithm_files/figure-html/cell-5-1-image.png" class="img-fluid figure-img"></p>
-<figcaption>image.png</figcaption>
-</figure>
-</div>
-
-
-</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
