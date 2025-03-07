@@ -12,9 +12,20 @@ website:
     search: true
     collapse-level: 1
     contents:
-      - timeline.ipynb
-      - The_Swendsen–Wang_Algorithm.ipynb
-      - Theory.ipynb
+    files:
+      ipynb:
+        - reasources.ipynb
+        - 'Binder_recprocal .ipynb'
+        - correlation_length.ipynb
+        - Critical_Exponents.ipynb
+        - Theory.ipynb
+        - intro.ipynb
+        - Critical_Slowing_down.ipynb
+        - misc.ipynb
+        - timeline.ipynb
+        - notebook.ipynb
+      qmd:
+        - index.qmd
 
 
 
