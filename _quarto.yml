@@ -23,6 +23,7 @@ website:
         - timeline.ipynb
         - notebook.ipynb
         - index.qmd
+        - interactive.qmd
 
 
 
