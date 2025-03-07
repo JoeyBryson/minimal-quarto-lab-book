@@ -12,7 +12,6 @@ website:
     search: true
     collapse-level: 1
     contents:
-    files:
       ipynb:
         - reasources.ipynb
         - 'Binder_recprocal .ipynb'
