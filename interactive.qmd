@@ -1,6 +1,9 @@
 ---
 title: "Mean Field Interactive demonstration"
 format: html
+execute:
+  echo: false
+  results: 'markup'
 ---
 
 ```{python}
