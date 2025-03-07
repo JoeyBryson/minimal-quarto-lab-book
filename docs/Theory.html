@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Defining The Ising Model – Minimal Quarto Lab Book</title>
+<title>Ising Model Theory – Minimal Quarto Lab Book</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,10 +20,44 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
 <script src="site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -66,6 +100,10 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -108,7 +146,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Theory.html">Defining The Ising Model</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./Theory.html">Ising Model Theory</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -148,7 +186,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./Theory.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">Defining The Ising Model</span></a>
+ <span class="menu-text">Ising Model Theory</span></a>
   </div>
 </li>
     </ul>
@@ -161,7 +199,22 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#computational-algorithms" id="toc-computational-algorithms" class="nav-link active" data-scroll-target="#computational-algorithms"><span class="header-section-number">0.1</span> Computational Algorithms</a></li>
+  <li><a href="#defining-the-ising-model" id="toc-defining-the-ising-model" class="nav-link active" data-scroll-target="#defining-the-ising-model"><span class="header-section-number">0.0.1</span> Defining The Ising Model</a></li>
+  <li><a href="#computational-algorithms" id="toc-computational-algorithms" class="nav-link" data-scroll-target="#computational-algorithms"><span class="header-section-number">0.1</span> Computational Algorithms</a>
+  <ul class="collapse">
+  <li><a href="#the-swendsen-wang-algorythm" id="toc-the-swendsen-wang-algorythm" class="nav-link" data-scroll-target="#the-swendsen-wang-algorythm"><span class="header-section-number">0.1.1</span> The Swendsen-Wang Algorythm</a></li>
+  </ul></li>
+  <li><a href="#phase-transitions" id="toc-phase-transitions" class="nav-link" data-scroll-target="#phase-transitions"><span class="header-section-number">1</span> Phase Transitions</a>
+  <ul class="collapse">
+  <li><a href="#mean-field-solution" id="toc-mean-field-solution" class="nav-link" data-scroll-target="#mean-field-solution"><span class="header-section-number">1.1</span> Mean Field Solution</a></li>
+  <li><a href="#critical-exponents" id="toc-critical-exponents" class="nav-link" data-scroll-target="#critical-exponents"><span class="header-section-number">1.2</span> Critical exponents</a>
+  <ul class="collapse">
+  <li><a href="#correlation-length" id="toc-correlation-length" class="nav-link" data-scroll-target="#correlation-length"><span class="header-section-number">1.2.1</span> Correlation length</a></li>
+  <li><a href="#susceptibility-specific-heat-and-magnetization" id="toc-susceptibility-specific-heat-and-magnetization" class="nav-link" data-scroll-target="#susceptibility-specific-heat-and-magnetization"><span class="header-section-number">1.2.2</span> Susceptibility, Specific Heat and Magnetization</a></li>
+  </ul></li>
+  <li><a href="#finding-the-critical-exponents-through-numerical-simulation" id="toc-finding-the-critical-exponents-through-numerical-simulation" class="nav-link" data-scroll-target="#finding-the-critical-exponents-through-numerical-simulation"><span class="header-section-number">1.3</span> Finding The Critical exponents through numerical simulation</a></li>
+  <li><a href="#the-binder-cumulant" id="toc-the-binder-cumulant" class="nav-link" data-scroll-target="#the-binder-cumulant"><span class="header-section-number">1.4</span> The Binder Cumulant</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -170,7 +223,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Defining The Ising Model</h1>
+<h1 class="title">Ising Model Theory</h1>
 </div>
 
 
@@ -187,21 +240,24 @@ window.Quarto = {
 </header>
 
 
+<section id="defining-the-ising-model" class="level3" data-number="0.0.1">
+<h3 data-number="0.0.1" class="anchored" data-anchor-id="defining-the-ising-model"><span class="header-section-number">0.0.1</span> Defining The Ising Model</h3>
 <p>We start with 2d lattice where each lattice site <span class="math inline">\(i\)</span> has a corresponing ‘spin’ $ _i {-1, +1} $. The microstate of lattice spins is notated by <span class="math inline">\(\boldsymbol{\sigma}\)</span>. A Hamiltonian of a state <span class="math inline">\(\boldsymbol{\sigma}\)</span> in the Ising Model (in the absence of an external field) is defined by <span class="math display">\[H(\boldsymbol{\sigma}) = -\sum_{\langle i j \rangle} J_{ij} \sigma_i \sigma_j \tag{1}
 \]</span> Where <span class="math inline">\(\langle i j \rangle\)</span> indicates <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are adjacent lattice sites and <span class="math inline">\(J_{ij}\)</span> is the ‘coupling strength’ between given sites. In this experiment <span class="math inline">\(J_{ij}\)</span> is set equal to <span class="math inline">\(1\)</span> for all interactions and the Hamiltonian becomes simply <span class="math display">\[H(\boldsymbol{\sigma}) = -\sum_{\langle i j \rangle} \sigma_i \sigma_j \tag{2}
 \]</span> The probability of any given state in a thermodynamic system in equilibrium at temperature <span class="math inline">\(T\)</span> coresponding to Bolzman factor <span class="math inline">\(\beta = 1/(k_BT)\)</span> is given by <span class="math display">\[ p(\boldsymbol{\sigma}) = \frac{e^{-\beta H(\boldsymbol{\sigma})}}{Z} \tag{3}
 \]</span> where <span class="math inline">\(Z_{\beta}\)</span> is the partition function <span class="math display">\[ Z = \sum_{\boldsymbol{\sigma}} e^{-\beta H(\boldsymbol{\sigma})}  \tag{4}
 \]</span></p>
-<section id="computational-algorithms" class="level3" data-number="0.1">
-<h3 data-number="0.1" class="anchored" data-anchor-id="computational-algorithms"><span class="header-section-number">0.1</span> Computational Algorithms</h3>
+</section>
+<section id="computational-algorithms" class="level2" data-number="0.1">
+<h2 data-number="0.1" class="anchored" data-anchor-id="computational-algorithms"><span class="header-section-number">0.1</span> Computational Algorithms</h2>
 <p>Numerically simulating the Ising Model to produce representative statistics requires the above equations be satisfied aswell as that the simulation be in an equilibrium state. One method to ensure equilibrium is by ensuring condition of <strong>detailed balance</strong>. That is, that for any two microstates <span class="math inline">\(\nu\)</span> and <span class="math inline">\(\mu\)</span>. <span class="math display">\[p(\mu) P(\mu \to \nu) =p(\nu) P(\nu \to \mu) \tag{5}
-\]</span> #### The Metropolis Hastings Algorythm The Metropolis Hastings Algorythm is one such algorythm that satisfies detailed balance by only changing one spin state <span class="math inline">\(\sigma_i\)</span> at a time (so for any <span class="math inline">\(\nu\)</span> and <span class="math inline">\(\mu\)</span> with more than one spin states difference <span class="math inline">\(P(\mu \to \nu) = P(\nu \to \mu) = 0\)</span> for a given simulation step). To Satisfy <span class="math inline">\((5)\)</span>, <span class="math inline">\(P(\mu \to \nu)\)</span> and <span class="math inline">\(P(\nu \to \mu)\)</span> must be chosen such that<br>
+\]</span> ### The Metropolis Hastings Algorythm The Metropolis Hastings Algorythm is one such algorythm that satisfies detailed balance by only changing one spin state <span class="math inline">\(\sigma_i\)</span> at a time (so for any <span class="math inline">\(\nu\)</span> and <span class="math inline">\(\mu\)</span> with more than one spin states difference <span class="math inline">\(P(\mu \to \nu) = P(\nu \to \mu) = 0\)</span> for a given simulation step). To Satisfy <span class="math inline">\((5)\)</span>, <span class="math inline">\(P(\mu \to \nu)\)</span> and <span class="math inline">\(P(\nu \to \mu)\)</span> must be chosen such that<br>
 <span class="math display">\[
 \frac{P(\mu \to \nu)}{P(\nu \to \mu)} = \frac{p(\nu)}{p(\mu)} = \frac{\frac{e^{-\beta H(\nu)}}{Z}}{\frac{e^{-\beta H(\mu)}}{Z}} = e^{-\beta(H(\nu)-H(\mu))} \tag{6}
 \]</span> This can be done by the following method: Let <span class="math inline">\(\nu\)</span> be the current state Choose a random lattice site and let <span class="math inline">\(\mu\)</span> be the proposed state of flipping the spin on the chosen lattice site, the probability to be computed is <span class="math inline">\(P(\nu \to \mu)\)</span> 1) Choose a random lattice site 2) Calculate <span class="math inline">\(\Delta H = H(\nu)-H(\mu)\)</span> 3) - If <span class="math inline">\(\Delta H &gt; 0\)</span>, set <span class="math inline">\(P(\mu \to \nu) = 1\)</span>, then to satisfy <span class="math inline">\((6)\)</span>, let <span class="math inline">\(P(\nu \to \mu) = e^{-\beta(\Delta H)}\)</span> - Else if <span class="math inline">\(\Delta H &lt; 0\)</span>, by symetry of the above line, let <span class="math inline">\(P(\nu \to \mu) = 1\)</span></p>
 <p>These steps can be repeated and will produce true Ising Model statistics as the number of steps goes to infinity. This is one of the simplest ways to simulate the Ising Model</p>
-<section id="the-swendsen-wang-algorythm" class="level4" data-number="0.1.1">
-<h4 data-number="0.1.1" class="anchored" data-anchor-id="the-swendsen-wang-algorythm"><span class="header-section-number">0.1.1</span> The Swendsen-Wang Algorythm</h4>
+<section id="the-swendsen-wang-algorythm" class="level3" data-number="0.1.1">
+<h3 data-number="0.1.1" class="anchored" data-anchor-id="the-swendsen-wang-algorythm"><span class="header-section-number">0.1.1</span> The Swendsen-Wang Algorythm</h3>
 <p>The Metropolis-Hastings algorythm produces true statistics as the number of steps goes to infinity, and produces sufficiently accurate statistics in a finite number of steps for temperatures above and bellow the critical temperature. However around the critical temperature the number of steps required to produce representative distributions goes to infitity, this phenomenon is known as <strong>Critical Slowing Down</strong>, see URL for a more in depth investigation. In order to study the system at criticality, for example, to find the <strong>Critical Exponents</strong>. An algorythm must be used that is computationally stable at and around the critical temperature. One algorythm which satisfies this requirement is the Swendsen-Wang Algorythm. Bellow we will show it also satisfies detailed balance for the Ising Model.</p>
 <p>As before, start with a state given by <span class="math inline">\(\mu\)</span>. The Swendsen-Wang Algorythm works by finding many possible <span class="math inline">\(\nu\)</span> and tranforming to any found state <span class="math inline">\(\nu\)</span> with uniform probability. This works by introducing a new element, for each pair of adjacent lattice sites <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> assign a ‘bond’ variable <span class="math inline">\(d_{i,j} \in \{0, 1\}\)</span> these are assigned according to a probability distribution conditional on the spin states <span class="math inline">\(\mu_i\)</span> and <span class="math inline">\(\mu_j\)</span> contained in <span class="math inline">\(\mu\)</span>. New states <span class="math inline">\(\nu\)</span> are then derived directly from the bond configuration <span class="math inline">\(d\)</span>.</p>
 <p>This can be thought of as splitting the probability <span class="math inline">\(P(\nu \to \mu)\)</span> into conditional probabilities <span class="math inline">\(P(\nu \to \mu) = \sum_{d \in D}{P(\mu \mid d)P(d \mid \nu)}\)</span> where <span class="math inline">\(D\)</span> is the set of all possible bond states. The procedure is as follows:</p>
@@ -222,6 +278,7 @@ P(d_{i,j} = 0 \mid \mu_i \neq \mu_j) = 1
 <li><p>Clustering Step: Any two lattice sites <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> which are connected by a bond d_{i,j} = 1, must have the same spin in <span class="math inline">\(\mu\)</span>. Even if lattice sites are not adjacent, if there are bonds which connect them via intermediate lattice sites, the previous condition nececitates that they must have the same spin. In this way, clusters can be formed. A clustering algorythm can be used to complete this step, given a bond configuration <span class="math inline">\(d\)</span></p></li>
 <li><p>Cluster flipping step: Given the space of possible <span class="math inline">\(\mu\)</span>’s with each cluster being of one spin, a final <span class="math inline">\(\mu\)</span> can be picked uniformly by simply assigning each cluster either spin 1 or -1 with a probability of 1/2</p></li>
 </ol>
+<p><img src="Theory_files/figure-html/cell-4-1-image.png" class="img-fluid" alt="image.png"> From https://www.inference.org.uk/itila/swendsen.pdf</p>
 <p>As for the Metropolis Hastings Algorithm we want to show <span class="math display">\[
 \frac{P(\mu \to \nu)}{P(\nu \to \mu)} = \frac{\sum_{d \in D}{P(\nu \mid d)P(d \mid \mu)}}{\sum_{d \in D}{P(\mu \mid d)P(d \mid \nu)}} = e^{-\beta(H(\nu)-H(\mu))}
 \]</span></p>
@@ -300,7 +357,203 @@ e^{-\beta\sum_{\langle i j \rangle} J(2\delta_{\mu_i, \mu_j}-1-2\delta_{\nu_i, \
 e^{-\beta(\sum_{\langle i j \rangle} J(2\delta_{\mu_i, \mu_j}-1)-(-\sum_{\langle i j \rangle} J(2\delta_{\nu_i, \nu_j}-1)))}\\=
 e^{-\beta(H(\nu)-H(\mu))}
 \]</span></p>
-<p>As required. And so the Swendsen-Wang Algorythm satisfies detailed balance and will produce Ising Model Statistics.</p>
+<p>As required. And so the Swendsen-Wang Algorythm satisfies detailed balance and will produce Ising Model Statistics. This overlengthy form of a proof/ line of reasonning for the detailed balance of the Swendsen-Wang algorythm was written by me and the logic was not directly copied from any other sources.</p>
+</section>
+</section>
+<section id="phase-transitions" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Phase Transitions</h1>
+<section id="mean-field-solution" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="mean-field-solution"><span class="header-section-number">1.1</span> Mean Field Solution</h2>
+<p>The mean field approximation is a method of simplifying the system by replacing individual spin-spin interactions with spin-field interaction. Since we are working with model without an external field, the field we substitute is an ‘effective field’ which is the the mean of the spin’s neighbour’s. The effective field</p>
+<p><span class="math display">\[
+B_{eff} = 4\langle \sigma_j \rangle
+\]</span> Is the sum of the neighbors on the 4 <span class="math inline">\(j\)</span> neighbor sites assuming they all have average spin <span class="math inline">\(\langle \sigma_j \rangle\)</span> This approximation produces the adjusted Hamiltonian</p>
+<p><span class="math display">\[
+H(\boldsymbol{\sigma}) = -\sum_{i} B_{eff}\sigma_i
+\]</span></p>
+<p>Since each part of the hamiltonian is now dependent only on the ‘field’ <span class="math inline">\(B_{eff}\)</span> and the individual spin <span class="math inline">\(\sigma_i\)</span>, we can treat each spin as being dependent on it’s own Hamiltonian<br>
+<span class="math display">\[
+H_i = B_{eff}\sigma_i
+\]</span></p>
+<p>For a given spin <span class="math inline">\(\sigma_i\)</span>, it is assumed that on average it has the same spin as it’s neighbors ie <span class="math inline">\(\langle \sigma_i \rangle = \langle \sigma_j \rangle\)</span>. We can express <span class="math inline">\(\langle \sigma_i \rangle\)</span> by it’s probability</p>
+<p><span class="math display">\[
+\langle \sigma_i \rangle = \frac{1}{Z}\sum_i{\sigma_i e^{-H_i}} = \frac{1}{Z}\sum_i{\sigma_i e^{-\beta B_{eff}\sigma_i}} = \frac{e^{\beta B_{eff}}-e^{-\beta B_{eff}}}{e^{\beta B_{eff}}+e^{-\beta B_{eff}}} =\tanh(\beta B_{eff})= \tanh(4 \beta \langle \sigma_j \rangle )
+\]</span></p>
+<p>So</p>
+<p><span class="math display">\[
+\langle \sigma_i \rangle = \tanh(4 \beta \langle \sigma_i \rangle )
+\]</span></p>
+<p>This equation cannot be solved analytically but it can be plotted to study it’s behaviour</p>
+<div id="cell-29" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ipywidgets <span class="im">as</span> widgets</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> interact</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_sine_wave(T):</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1000</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.tanh(<span class="dv">4</span><span class="op">*</span>(<span class="dv">1</span><span class="op">/</span>T)<span class="op">*</span>x)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    plt.plot(x, y, label<span class="op">=</span><span class="ss">f"T = : </span><span class="sc">{</span>T<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    plt.plot(x, x, label<span class="op">=</span><span class="ss">f"T = : </span><span class="sc">{</span>T<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    plt.legend()</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="vs">r"\langle \sigma_i \rangle"</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="vs">r"\tanh(4 \beta \langle \sigma_i \rangle )"</span>)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="st">"figure 1"</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>interact(plot_sine_wave, T<span class="op">=</span>widgets.FloatSlider(<span class="bu">min</span><span class="op">=</span><span class="fl">0.1</span>, <span class="bu">max</span><span class="op">=</span><span class="dv">10</span>, step<span class="op">=</span><span class="fl">0.1</span>, value<span class="op">=</span><span class="fl">1.0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"0443a7c95e584c419fde691084eb0327","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="1">
+<pre><code>&lt;function __main__.plot_sine_wave(T)&gt;</code></pre>
+</div>
+</div>
+<div id="cell-30" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> interact</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_sine_wave(T):</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.linspace(<span class="op">-</span><span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">1000</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.tanh(<span class="dv">4</span><span class="op">*</span>(<span class="dv">1</span><span class="op">/</span>T)<span class="op">*</span>x) <span class="op">-</span> x</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">8</span>, <span class="dv">4</span>))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    plt.plot(x, y, label<span class="op">=</span><span class="ss">f"T = : </span><span class="sc">{</span>T<span class="sc">:.2f}</span><span class="ss">"</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    plt.legend()</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="vs">r"$\langle \sigma_i \rangle$"</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="vs">r"$\tanh(4 \beta \langle \sigma_i \rangle ) - \langle \sigma_i \rangle$"</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>interact(plot_sine_wave, T<span class="op">=</span>widgets.FloatSlider(<span class="bu">min</span><span class="op">=</span><span class="fl">0.1</span>, <span class="bu">max</span><span class="op">=</span><span class="dv">10</span>, step<span class="op">=</span><span class="fl">0.1</span>, value<span class="op">=</span><span class="fl">1.0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"a6d41098ecd149d3b8429d834f542492","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>&lt;function __main__.plot_sine_wave(T)&gt;</code></pre>
+</div>
+</div>
+<p>If we taylor expand the expression <span class="math inline">\(\tanh(4 \beta \langle \sigma_i \rangle )\)</span> around 0, we have. <span class="math display">\[
+\tanh(4 \beta \langle \sigma_i \rangle ) = 4 \beta \langle \sigma_i \rangle - \frac{(4 \beta \langle \sigma_i \rangle)^3}{3} + \mathcal{O}((4 \beta \langle \sigma_i \rangle)^5)
+\]</span></p>
+<p><span class="math display">\[
+\langle \sigma_i \rangle = 4 \beta \langle \sigma_i \rangle - \frac{(4 \beta \langle \sigma_i \rangle)^3}{3} + \mathcal{O}((4 \beta \langle \sigma_i \rangle)^5)
+\]</span></p>
+<p><span class="math display">\[
+\langle \sigma_i \rangle (1 - 4\beta) = -\frac{(4\beta)^3}{3} \langle \sigma_i \rangle^3
+\]</span></p>
+<p><span class="math display">\[
+\langle \sigma_i \rangle \left[ (1 - 4\beta) + \frac{(4\beta)^3}{3} \langle \sigma_i \rangle^2 \right] = 0
+\]</span></p>
+<p>the solutions of this equation describe the behaviour of magnetization in the Ising model.</p>
+<p>For <span class="math inline">\((1-4\beta)&gt;0\)</span>, the only solution is <span class="math inline">\(\langle \sigma_i \rangle = 0\)</span>.\</p>
+<p>For <span class="math inline">\((1-4\beta)&lt;0\)</span>, additional solutions of <span class="math display">\[\langle \sigma_i \rangle = \pm \sqrt{\frac{3(1-4\beta)}{{4\beta}^3}} = \pm \sqrt{\frac{3}{4}(T-4)T^2}\]</span> appear.</p>
+<p>As <span class="math inline">\(T_- \to 4\)</span>, the expression behaves as <span class="math display">\[\langle \sigma_i \rangle = \pm \sqrt{\frac{3}{4}(T-4)4^2} = \pm \sqrt{12(T-4)} = \pm \sqrt{12} {\lvert T-4 \rvert}^\frac{1}{2}\]</span></p>
+<p>We have derived some key behaviour about the the Ising Model using some simplifications. There is a high temperature and a low temperature phase. The high temperature phase is carracterized by a net zero magentization implying that there is a mix of up and down spins on average, we can call this the dissordered phase. The low temperature phase is characterized by either posotive or negative average magetization, implying that spins tend to allign themselves, we can call this the ordered phase. There is a certain temperature at which this behaviour transitions and we call this the Critical Temperature <span class="math inline">\(T_c\)</span>. Additionally, the magnetization follows a power law around the Critical Temperature <span class="math display">\[
+\langle \sigma_i \rangle \propto {\lvert T-T_c \rvert}^\frac{1}{2}
+\]</span> Many intrinsic quantities of the Ising model follow power laws of this nature around critical temperature. We call the exponents of these quantities, in the above case <span class="math inline">\(\frac{1}{2}\)</span>, the critical exponents.</p>
+<p>The mean field solution to the Ising Model is not numerirically accurate, however there is a glimpse into a more general understanding of these critical phenomena through the method outlined above. Looking at figure 1, with a temperature of <span class="math inline">\(T=T_c=4\)</span> the lines become tangent near the origin. This can be thought of as a point where the average magnetization can have the widest continuous range of values. If this is the case, and considering the fact that the method has no dependence on scale, this has some intersting implications. If there was local dissorder (implying a wide range of possible average magitization on a small scale) but it was granular, so as you zoomed out the system would appear smooth, the average magnetization would aproach 0 for larger system sizes. This is what happens in the high temperature system. But the fact that the average magnetization has a range independent of system size means something else is occuring. There must be structure allowing for unevenness in the system’s magnetization at all scales, and of the same type. This means that the system becomes fractal at the critical temperature, and it looks similar at different scales.</p>
+<p>The mean field picture tries to discern the behaviour of the entire system by considering just a single spin and the system’s average value. To model the Ising model more accurately will require us to consider that (at least for high and low tempereatures) spins interact with eachother more strongly on smaller scales than on larger scales. We can quantify this with the parameter of Correlation Length</p>
+</section>
+<section id="critical-exponents" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="critical-exponents"><span class="header-section-number">1.2</span> Critical exponents</h2>
+<section id="correlation-length" class="level3" data-number="1.2.1">
+<h3 data-number="1.2.1" class="anchored" data-anchor-id="correlation-length"><span class="header-section-number">1.2.1</span> Correlation length</h3>
+<p>One key quantity to understanding the critical behaviour of the system is the correlation length <span class="math inline">\(\xi(T)\)</span>.</p>
+<p><span class="math display">\[
+\langle (\sigma_i - \langle \sigma_i \rangle)(\sigma_j -  \langle \sigma_j \rangle) \rangle \sim e^{-\frac{|x - y|}{\xi(T)}}
+\]</span></p>
+<p>where x and y are the spacial position vectors of the spins <span class="math inline">\(\sigma_i\)</span> and <span class="math inline">\(\sigma_j\)</span>. <span class="math inline">\(\xi(T)\)</span> represents the typical length scale at which the two spins <span class="math inline">\(\sigma_i\)</span> and <span class="math inline">\(\sigma_j\)</span> are correlated more than <span class="math inline">\(1/e\)</span></p>
+<p>The behaviour of the correlation length over a range of temperatures over the critical region has great explanatory power for the behaviour of the system’s other quantities.</p>
+<p>As with magnetization, the correlation length obeys a power law relationship around the critical temperature <span class="math display">\[
+\xi(T) \propto {\lvert T-T_c \rvert}^{-\nu}
+\]</span> where <span class="math inline">\(\nu &gt; 0\)</span> is the critical exponent of correlation length</p>
+<p>This power law means that as <span class="math inline">\(T \to T_c\)</span>, <span class="math inline">\(\xi(T) \to \infty\)</span></p>
+<p>This alligns with our previous interpretation of the average magnetism given by the mean field theory. As the system approaches the critical temperature, spins that are further apart start to influence eachother, until at the critical temperature, spins are correlated at every scale.</p>
+</section>
+<section id="susceptibility-specific-heat-and-magnetization" class="level3" data-number="1.2.2">
+<h3 data-number="1.2.2" class="anchored" data-anchor-id="susceptibility-specific-heat-and-magnetization"><span class="header-section-number">1.2.2</span> Susceptibility, Specific Heat and Magnetization</h3>
+<p>The four critical exponents are <span class="math inline">\(\beta\)</span>, <span class="math inline">\(\gamma\)</span>, <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\nu\)</span> where</p>
+<p>$$</p>
+<pre><code>\langle |\sigma|\rangle \propto |T-T_c|^\beta\\
+\chi_M \propto |T-T_c|^{-\gamma}\\
+C_V \propto |T-T_c|^{-\alpha}\\
+\xi \propto |T-T_c|^{-\nu}</code></pre>
+<p>$$</p>
+<p>Where <span class="math inline">\(\chi_M =\beta​(⟨\sigma^2⟩−{⟨|\sigma|⟩}^2)\)</span> and specific heat <span class="math inline">\(C_V = \frac{\beta}{T}​(⟨\epsilon^2⟩−{⟨\epsilon⟩}^2)\)</span> where <span class="math inline">\(\epsilon = H/N^2\)</span> is the average magetization. In 1944 Onsager (https://journals.aps.org/pr/pdf/10.1103/PhysRev.65.117) found these exponents analytically to be</p>
+<p><span class="math display">\[
+\alpha=0, \quad \beta=0.125, \quad \gamma=1.75, \quad \nu=1
+\]</span></p>
+</section>
+</section>
+<section id="finding-the-critical-exponents-through-numerical-simulation" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="finding-the-critical-exponents-through-numerical-simulation"><span class="header-section-number">1.3</span> Finding The Critical exponents through numerical simulation</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Theory_files/figure-html/cell-44-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p>Figure 4: Correlation Length against temperature in the critical region, for an N = 32 system derived by a method outlined here(URL)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Theory_files/figure-html/cell-46-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p>Figure 5: Above is data from an Ising Model simulation discussed here(URL) which shows the behaviour of four key quantities around the critical temperature</p>
+<p>One of the main objectives of this lab is to find numerical estimates for the critical exponents through computational simulation. Returning to the correlation length</p>
+<p><span class="math display">\[
+\xi \propto |T-T_c|^{-\nu}
+\]</span></p>
+<p>as the temperature aproaches criticallity, any numerical simulation will be insuffiecient to accomodate a growing correlation length, we use periodic boundary conditions, meaning that effectively no two points can be more that <span class="math inline">\(N\)</span> distance away from eachother. The increase in correlation length can be thought of as source of the critical behaviour of the other system variables, and so it makes sense that where the correlation length is maximum the system behaves as if at criticality. This means that for a system of length <span class="math inline">\(N\)</span> there is a <strong>Psudocritical</strong> point where <span class="math inline">\(\xi \sim N\)</span> the variables will behave closest to true criticallity, and there will be a psudocritical temperature <span class="math inline">\(T_c(N^2)\)</span> at which this happens. It follows that</p>
+<p><span class="math display">\[
+    \xi \sim N\propto \bigg \lvert T_c(N^2) - T_c\bigg\rvert^{-\nu} \quad \Rightarrow \quad \bigg\lvert T_c(N^2) - T_c\bigg\rvert \propto N^{-1/\nu}
+\]</span></p>
+<p>One way we can find the Psudocritical point by measureing the peak of <span class="math inline">\(\chi_M\)</span>, since this is directly caused by the increase in correlation lenths. We have <span class="math display">\[
+\chi_{M,\text{peak}} \propto |T_c(N^2)-T_c(\infty)|^{-\gamma}  \propto N^{\gamma/\nu}
+\]</span></p>
+<p>It follows that</p>
+<p><span class="math display">\[
+    \log \chi_{M,\text{peak}} =\frac{\gamma}{\nu}\log N
+\]</span> from which <span class="math inline">\(z=\gamma/\nu\)</span> can be found.</p>
+</section>
+<section id="the-binder-cumulant" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="the-binder-cumulant"><span class="header-section-number">1.4</span> The Binder Cumulant</h2>
+<p>Following on from the logic in the previous section, it can be seen that at the critical point,</p>
+<p><span class="math display">\[
+\langle |\sigma| \rangle \propto |T_c(N^2)-T_c(\infty)|^{\beta}  \propto N^{\beta/\nu}
+\]</span></p>
+<p>We introduce a distribution function <span class="math inline">\(P_N(\sigma)\)</span>, <span class="math inline">\(\int P_N(\sigma) d\sigma = 1\)</span> for the Magetisation per spin <span class="math inline">\(\sigma\)</span> Now <span class="math display">\[
+\langle |\sigma| \rangle = \int |\sigma| P_N(\sigma) d\sigma \propto N^{-\beta/\nu}
+\]</span></p>
+<p>It follows that <span class="math inline">\(P_N(\sigma)\)</span> can be written in the form</p>
+<p><span class="math display">\[
+P_N(\sigma) = N^{\beta/\nu}P(u), u = \sigma N^{\beta/\nu}
+\]</span></p>
+<p>Where <span class="math inline">\(P(u)\)</span> is some size independent distribution and and the prefactor comes from the normalization condition of <span class="math inline">\(P_N\)</span></p>
+<p>The Binder Cumulant is defined as</p>
+<p><span class="math display">\[
+U_N = 1 - \frac{\langle \sigma^4 \rangle}{3\langle \sigma^2 \rangle^ 2}
+\]</span></p>
+<p>we can find it’s behavior using the second and fourth moment definitions and the change of variable <span class="math inline">\(u N^{-\beta/\nu} = \sigma \quad  N^{-\beta/\nu} du = d\sigma\)</span></p>
+<p><span class="math display">\[
+\langle \sigma^2 \rangle^2 = (\int \sigma^2 P_N(\sigma) d\sigma)^2 \\
+= (\int (u N^{-\beta/\nu})^2 P(u)du)^2
+\propto N^{-4\beta/\nu}
+\]</span></p>
+<p><span class="math display">\[
+\langle \sigma^4 \rangle = \int \sigma^4 P_N(\sigma) d\sigma \\
+= \int (u N^{-\beta/\nu})^4 P(u)du
+\propto N^{-4\beta/\nu}
+\]</span></p>
+<p>Therefore at the critical temperature, the Binder Cumulent is constant and independent of system size. In the previous section the proportionality relationship to <span class="math inline">\(N\)</span> was at the psudocritical temperature as this behaviour extends approximately to the local region. However, using the Binder Cumulant this proportionality relationship is precicely being tested so that the point where <span class="math inline">\(U_L\)</span> is found to be most size independent is a very accurate way to determine the critical temperature, provived N is large enough to minimize granular effects. The details of the method and results of this process can be found here</p>
 
 
 </section>

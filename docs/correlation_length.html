@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>reasources – Minimal Quarto Lab Book</title>
+<title>correlation_length – Minimal Quarto Lab Book</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -67,35 +67,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -165,20 +136,19 @@ window.Quarto = {
 
 
 
-<p>analytical proof there is a phase transition: https://renormalwords.wordpress.com/2017/04/20/the-peierls-argument/</p>
-<p>Contains an argument for SW satisfying DB https://arxiv.org/pdf/2205.07226</p>
-<p>http://www.stat.phys.kyushu-u.ac.jp/B4/Papers/Feynman-StatMech-Chap-1-3-Org.pdf</p>
-<p>Swendsen-Wang Algorythm explanation https://www.inference.org.uk/itila/swendsen.pdf</p>
-<p>Mean Field theory derivations https://cpb-us-w2.wpmucdn.com/u.osu.edu/dist/3/67057/files/2018/09/Ising_model_MFT-25b1klj.pdf</p>
-<p>assymetric critical exponents https://arxiv.org/pdf/1508.07852</p>
-<p>introductiuon to renormalization groups http://www.scholarpedia.org/article/Critical_Phenomena:_field_theoretical_approach</p>
-<p>Onsager’s solutions https://journals.aps.org/pr/pdf/10.1103/PhysRev.65.117</p>
-<p>phase transitions in the context of biological systems file:///home/joey/Downloads/SSRN-id1397677.pdf</p>
-<p>discussion of psudocritical temperature https://watermark.silverchair.com/95-4-733.pdf?token=AQECAHi208BE49Ooan9kkhW_Ercy7Dm3ZL_9Cf3qfKAc485ysgAAA0owggNGBgkqhkiG9w0BBwagggM3MIIDMwIBADCCAywGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM346nv6ylEVaY_wwJAgEQgIIC_dKsXeCqJae7scxKbmP6I8sjR0FrfK8Cyvz34mmN6Cz3H7yrmh_EejCipf258vmG6hRwLuIsNjkQrU_1zzl06lIO7h6Igq2gpp9APf7RqnwMtAoibl1his86QZZRaskdMBFsvbJJVzI9dHQ8UWPobeE0BWqxBIFNyfM17cKQaAgQAxK3fNgj6x1sBFZTmFrTQQMR_WC5TdGPYi6_I2WKWZken87gTT-2emCfFrpur6gw1a0b9WZbCuyEmAOkpay6NqfP7yAIup547LNu-TC868OVAmpl3tTQOiMROws_aNkHcmTTCs7JTRr28wM5DfkX8o_EOAlp9rU22Aqh8jKDFnJQAzubx7t2L2kcdUoySee discussions, stats, and author profiles for this publication at: https://www.researchgate.net/publication/222687003 Correlations, Risk NY8EpJ0cRS2edDvy4NPobe_J3Xdslk0p8Ujd0OV1mhkXUskay2vv0GuOqzxJOAa0EIynKF0cjnubyKw45rcxRz1H2qhIhpcn9TEQTGfaC7Ekr8DfLNCLcSJcxwoNxhagmfJgCCajUe6h49FhQmmghOy6tPrRat8UM2mQ_Ixd9OIcBlg2xVrgp8rb4pJ3slfZmX9_I33b6C2iUjjqLi48DkB2_DR16h4zP0JcWqb5ax-hqDnfTNtdF7A1Eqkbh1qmCTB_0i-eVn-WZbN0zctZvKdpyDxks-6BICYIl9a9wZs6TSWYfFJZD0v9fm6tIpv9RJ3Ge7j6ED2xwVixdVxsU-Xzf-K8OLAktux7lqvUVNnhVWWY2vUy-joMBOJT7YWCjY45hrzPqWKGnhORrLrkCzKb0bfCHgaSthqgdSYDaBWp01WmI906vXLORQamSaS2GRa6zMbsoyaCfm6CDgSP6XquZKcYOZNSQ7_pwpAo6svCFfdngeohXWyIXNkAiJWjZ8yWYeV2iV7PleCVCHd77KHLtkCwnD56TkitKm74x891iVZ-RSVDKE9PuM8DlphqoPCzIFvF5CM-8QNkZkxKB8P-tjkJ5rOz3j0Ce3KeqsfgJ2zwzWHyDSF2qM1JNL5QZ_ef11M35s7BmEyF3rVFpw</p>
-<p>Binder discussion http://www.lptms.ger distinguishes the sign of the magne- tization. The reason for this choice is that it can be meaningfully compared to the distributions of finite systems {P~I)(s) and P~P)(s), as introduced above}, for which there is no spontaneous magnetization. Thus also for arbitu-psud.fr/membres/trizac/Ens/PCS/TD1_Binder.pdf</p>
-<p>phd theses on Ising https://www.bristol.ac.uk/physics/media/theory-theses/smith-t-thesis.pdf</p>
-<p>The binder cumulant’s sensitivity to boundrary conditions file:///home/joey/Downloads/e2006-00209-7.pdf</p>
-<p>Binder’s seminal paper introducing <span class="math inline">\(U_L\)</span> file:///home/joey/Downloads/BF01293604.pdf https://link.springer.com/article/10.1007/bf01293604?utm_source=chatgpt.com</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="correlation_length_files/figure-html/cell-1-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p><img src="correlation_length_files/figure-html/cell-2-1-image.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="correlation_length_files/figure-html/cell-3-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
 
 
 
