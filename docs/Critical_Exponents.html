@@ -135,14 +135,14 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reasources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">reasources.html</span></a>
+  <a href="./Theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ising Model Theory</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Binder_recprocal .html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Binder_recprocal .html</span></a>
+  <a href="./Critical_Slowing_down.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">The Problem of Critical Slowing Down</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -153,31 +153,16 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./Binder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Binder.html</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./Critical_Exponents.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Finding The Critical Exponents</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Theory.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Ising Model Theory</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">First Session</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Critical_Slowing_down.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">The Problem of Critical Slowing Down</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
- <span class="menu-text">misc.ipynb</span>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./timeline.html" class="sidebar-item-text sidebar-link">
@@ -185,14 +170,17 @@ window.Quarto = {
   </div>
 </li>
         <li class="sidebar-item">
- <span class="menu-text">notebook.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="./demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">demo.html</span></a>
+  </div>
+</li>
         <li class="sidebar-item">
- <span class="menu-text">index.qmd</span>
-  </li>
-        <li class="sidebar-item">
- <span class="menu-text">interactive.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="./reasources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">reasources.html</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -264,10 +252,22 @@ T_c(N^2) = T_c + A N^{-1/\nu}
 <figcaption>image.png</figcaption>
 </figure>
 </div>
-<p>This yielded a values of <span class="math inline">\(\nu = 1.00\pm0.07\quad T_c = 2.2742\)</span> and <span class="math inline">\(A = 1.7\pm0.5\)</span>. This method produced large errors since T_c was presumed unknown, so a log-log plot was not posible.</p>
+<p>This yielded a values of <span class="math inline">\(\nu = 1.00\pm0.07\quad T_c = 2.2742\pm 0.0006\)</span> and <span class="math inline">\(A = 1.7\pm0.5\)</span>. This method produced large errors since T_c was presumed unknown, so a log-log plot was not posible.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Critical_Exponents_files/figure-html/cell-8-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="attachment:image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="attachment:image.png" class="img-fluid figure-img"></p>
 <figcaption>image.png</figcaption>
 </figure>
 </div>
@@ -282,13 +282,13 @@ T_c(N^2) = T_c + A N^{-1/\nu}
 <p>can be used to find the ratio of these two critical exponents</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Critical_Exponents_files/figure-html/cell-10-1-image.png" class="img-fluid figure-img"></p>
+<p><img src="Critical_Exponents_files/figure-html/cell-12-1-image.png" class="img-fluid figure-img"></p>
 <figcaption>image.png</figcaption>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Critical_Exponents_files/figure-html/cell-11-1-image.png" class="img-fluid figure-img"></p>
+<p><img src="Critical_Exponents_files/figure-html/cell-13-1-image.png" class="img-fluid figure-img"></p>
 <figcaption>image.png</figcaption>
 </figure>
 </div>
@@ -305,11 +305,18 @@ T_c(N^2) = T_c + A N^{-1/\nu}
 <p>at the psudo-critical point can be used in a similar mannor to find <span class="math inline">\(\beta\)</span>.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="Critical_Exponents_files/figure-html/cell-13-1-image.png" class="img-fluid figure-img"></p>
+<p><img src="Critical_Exponents_files/figure-html/cell-15-1-image.png" class="img-fluid figure-img"></p>
 <figcaption>image.png</figcaption>
 </figure>
 </div>
 <p><span class="math inline">\(\beta\)</span> was found to have a value of</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="Critical_Exponents_files/figure-html/cell-17-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
+</figure>
+</div>
+<p>file:///home/joey/Downloads/PhysRev.185.832.pdf</p>
 
 
 </section>

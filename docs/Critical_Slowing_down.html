@@ -135,14 +135,14 @@ window.Quarto = {
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./reasources.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">reasources.html</span></a>
+  <a href="./Theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ising Model Theory</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./Binder_recprocal .html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Binder_recprocal .html</span></a>
+  <a href="./Critical_Slowing_down.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">The Problem of Critical Slowing Down</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -153,31 +153,16 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./Binder.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Binder.html</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./Critical_Exponents.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Finding The Critical Exponents</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Theory.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Ising Model Theory</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">First Session</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./Critical_Slowing_down.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">The Problem of Critical Slowing Down</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
- <span class="menu-text">misc.ipynb</span>
-  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./timeline.html" class="sidebar-item-text sidebar-link">
@@ -185,14 +170,17 @@ window.Quarto = {
   </div>
 </li>
         <li class="sidebar-item">
- <span class="menu-text">notebook.ipynb</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="./demo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">demo.html</span></a>
+  </div>
+</li>
         <li class="sidebar-item">
- <span class="menu-text">index.qmd</span>
-  </li>
-        <li class="sidebar-item">
- <span class="menu-text">interactive.qmd</span>
-  </li>
+  <div class="sidebar-item-container"> 
+  <a href="./reasources.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">reasources.html</span></a>
+  </div>
+</li>
     </ul>
     </div>
 </nav>
@@ -236,17 +224,21 @@ window.Quarto = {
 <figcaption>image-2.png</figcaption>
 </figure>
 </div>
-<p>This can be explained through the parameter of Relaxation Time. We define relation time arbitrarily by the number of simulation steps <span class="math inline">\(\tau\)</span> for the autocorrelation function <span class="math inline">\(C(\tau)\)</span> of the Magetization <span class="math inline">\(M(t)\)</span> defined by <span class="math inline">\(C(\tau) = \langle M(t) M(t+\tau) \rangle - \langle M(t) \rangle^2\)</span> to drop below 0.1. This can be thought of as the number of simulation steps before a given spin is only 10% caused by it’s initial state. In the metropolis Hastings algorythm, relaxation time is directly related to correlation length, because the mechanism of action is spacial. It increases or decreases cluster sizes incrementally and the correlation length bounds how fast it can do this.</p>
+<p>This can be explained through the parameter of Relaxation Time. We define relation time arbitrarily by the number of simulation steps <span class="math inline">\(\tau\)</span> for the autocorrelation function <span class="math inline">\(C(\tau)\)</span> of the Magetization <span class="math inline">\(M(t)\)</span> defined by <span class="math inline">\(C(\tau) = \langle M(t) M(t+\tau) \rangle - \langle M(t) \rangle^2\)</span> to drop below 0.1. This can be thought of as the number of simulation steps before a given spin is only 10% caused by it’s initial state. In the metropolis Hastings algorythm, relaxation time is directly related to correlation length, because the mechanism of action is spacial. It increases or decreases cluster sizes incrementally and the correlation length bounds how fast it can do this. In equation form we can write</p>
+<p><span class="math display">\[
+\tau \propto \epsilon^z
+\]</span></p>
+<p>Where z is the Dynamical Critical Exponent and has been found to be z=2.1665 https://journals.aps.org/pre/pdf/10.1103/PhysRevE.108.034118</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="relaxation_time.png" class="img-fluid figure-img"></p>
-<figcaption>attachment:relaxation_time.png</figcaption>
+<p><img src="Critical_Slowing_down_files/figure-html/cell-4-1-image.png" class="img-fluid figure-img"></p>
+<figcaption>image.png</figcaption>
 </figure>
 </div>
 <p>When the Relaxitation time is on the order of the simulation length as can be seen above, the simulation data is not representative of the theoretical statistics at the thermodynamic limit we want to investigate.</p>
 <section id="the-swendsen-wang-algorythm" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> The Swendsen-Wang algorythm</h1>
-<p>https://www.inference.org.uk/itila/swendsen.pdf The Swendsen-Wang Algorythm addresses this issue. It also produces Ising Model Statistics as shown in the theory section, however it also cycles a wider range of states much more efficiently at the critical temperature. Bellow are some graphs of the same quantities presented earlier after the same amount of simulation steps, except using the Swendsen- Wang algorythm.</p>
+<p>https://www.inference.org.uk/itila/swendsen.pdf The Swendsen-Wang Algorythm addresses this issue. It also produces Ising Model Statistics as shown in the theory section, however it also cycles a wider range of states much more efficiently at the critical temperature. The Swendsen-Wang Algorithm has been found to have a Dynamical Critical Exponent between 0.2 to 0.35 but probably doesn’t follow a size independent power law around the T_c https://arxiv.org/pdf/cond-mat/0603038 This is because the SW algorythm can induce global flipping in a single time step and the critical temperature is the point where this starts to be able to happen. Bellow are some graphs of the same quantities presented earlier after the same amount of simulation steps, except using the Swendsen- Wang algorythm.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="Critical_Slowing_down_files/figure-html/cell-6-1-image.png" class="img-fluid figure-img"></p>

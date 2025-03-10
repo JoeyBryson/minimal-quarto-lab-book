@@ -12,18 +12,14 @@ website:
     search: true
     collapse-level: 1
     contents:
-        - reasources.ipynb
-        - 'Binder_recprocal .ipynb'
-        - correlation_length.ipynb
-        - Critical_Exponents.ipynb
         - Theory.ipynb
-        - intro.ipynb
         - Critical_Slowing_down.ipynb
-        - misc.ipynb
+        - correlation_length.ipynb
+        - Binder.ipynb
+        - Critical_Exponents.ipynb
         - timeline.ipynb
-        - notebook.ipynb
-        - index.qmd
-        - interactive.qmd
+        - demo.ipynb
+        - reasources.ipynb
 
 
 
